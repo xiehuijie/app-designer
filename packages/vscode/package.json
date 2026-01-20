@@ -1,0 +1,19 @@
+{
+  "name": "@app-designer/vscode",
+  "version": "0.1.0",
+  "private": true,
+  "displayName": "App Designer",
+  "description": "VS Code extension for App Designer",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "main": "./dist/extension.js",
+  "scripts": {
+    "build": "echo 'Not implemented yet'",
+    "dev": "echo 'Not implemented yet'"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "typescript": "~5.9.3"
+  }
+}

@@ -2,13 +2,16 @@
   "files": [],
   "references": [
     {
-      "path": "./tsconfig.node.json"
+      "path": "./packages/webui"
     },
     {
-      "path": "./tsconfig.app.json"
+      "path": "./packages/local"
     },
     {
-      "path": "./tsconfig.vitest.json"
+      "path": "./packages/vscode"
+    },
+    {
+      "path": "./packages/tauri"
     }
   ]
 }

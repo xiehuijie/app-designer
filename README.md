@@ -1,52 +1,107 @@
 # app-designer
+
 A visualization design application that structures data, defines business logic, specifies interface definitions, and allows exporting template code.
 
-This template should help get you started developing with Vue 3 in Vite.
+## Monorepo 结构
 
-## Recommended IDE Setup
+此项目采用 pnpm workspace monorepo 结构，包含以下包：
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+| 包名 | 路径 | 描述 |
+|------|------|------|
+| `@app-designer/webui` | `packages/webui` | 前端项目，提供交互式界面 |
+| `@app-designer/local` | `packages/local` | 基于 Express 的本地后端服务器 |
+| `@app-designer/vscode` | `packages/vscode` | VS Code 插件后端（待实现） |
+| `@app-designer/tauri` | `packages/tauri` | 基于 Tauri 的桌面应用后端（待实现） |
 
-## Recommended Browser Setup
+## 快速开始
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+### 安装依赖
 
 ```sh
 pnpm install
 ```
 
-### Compile and Hot-Reload for Development
+### 开发模式
 
 ```sh
-pnpm dev
+# 启动前端开发服务器
+pnpm start:webui
+
+# 启动本地后端服务器（支持热更新）
+pnpm start:local
+
+# 同时启动前端和后端（需要两个终端）
+# 终端 1:
+pnpm start:local
+# 终端 2:
+pnpm start:webui
 ```
 
-### Type-Check, Compile and Minify for Production
+### 构建
 
 ```sh
-pnpm build
+# 构建本地版本（前端 + 后端）
+pnpm build:local
+
+# 构建 VS Code 插件（待实现）
+pnpm build:vscode
+
+# 构建 Tauri 桌面应用（待实现）
+pnpm build:tauri
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+### 测试
 
 ```sh
+# 运行单元测试
 pnpm test:unit
+
+# 运行端到端测试
+pnpm test:e2e
+
+# 类型检查
+pnpm type-check
 ```
+
+## 项目架构
+
+### Provider 机制
+
+前端 (`@app-designer/webui`) 通过 Provider 机制连接不同的后端：
+
+- **Local Provider**: 连接 `@app-designer/local` 后端，访问本地文件系统
+- **VS Code Provider**: 连接 `@app-designer/vscode` 后端，在 VS Code 中使用
+- **Tauri Provider**: 连接 `@app-designer/tauri` 后端，作为独立桌面应用
+
+### 本地后端 API
+
+`@app-designer/local` 提供以下文件系统 API：
+
+| 端点 | 方法 | 描述 |
+|------|------|------|
+| `/api/fs/list` | GET | 获取目录列表 |
+| `/api/fs/read` | GET | 读取文件内容 |
+| `/api/fs/write` | POST | 写入文件内容 |
+| `/api/fs/mkdir` | POST | 创建目录 |
+| `/api/fs/delete` | DELETE | 删除文件或目录 |
+| `/api/fs/stat` | GET | 获取文件/目录信息 |
+| `/api/fs/exists` | GET | 检查路径是否存在 |
+| `/api/health` | GET | 健康检查 |
+
+## 推荐 IDE 配置
+
+[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+
+## 推荐浏览器配置
+
+- Chromium 浏览器 (Chrome, Edge, Brave 等):
+  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
+- Firefox:
+  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
+
+## 许可证
+
+查看 [LICENSE](./LICENSE) 文件。
 
 ### Run End-to-End Tests with [Playwright](https://playwright.dev)
 

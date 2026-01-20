@@ -1,0 +1,27 @@
+{
+  "name": "@app-designer/local",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsup src/index.ts --format esm --dts --clean",
+    "start": "node dist/index.js",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "cors": "^2.8.5",
+    "open": "^10.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/cors": "^2.8.17",
+    "@types/node": "^24.10.4",
+    "tslib": "^2.8.1",
+    "tsup": "^8.3.6",
+    "tsx": "^4.19.2",
+    "typescript": "~5.9.3"
+  }
+}

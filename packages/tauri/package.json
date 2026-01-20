@@ -1,0 +1,12 @@
+{
+  "name": "@app-designer/tauri",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "echo 'Not implemented yet'",
+    "dev": "echo 'Not implemented yet'"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3"
+  }
+}
