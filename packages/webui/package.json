@@ -13,6 +13,7 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
+    "@app-designer/types": "workspace:*",
     "@antv/x6": "^3.1.4",
     "pinia": "^3.0.4",
     "primeicons": "^7.0.0",

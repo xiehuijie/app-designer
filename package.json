@@ -11,7 +11,7 @@
     "start:webui": "pnpm --filter @app-designer/webui dev",
     "start:vscode": "echo 'Not implemented yet'",
     "start:tauri": "echo 'Not implemented yet'",
-    "build:local": "pnpm --filter @app-designer/webui build && pnpm --filter @app-designer/local build",
+    "build:local": "pnpm --filter @app-designer/webui build && pnpm --filter @app-designer/local build && npx tsx ./scripts/build-local.mts",
     "build:vscode": "echo 'Not implemented yet'",
     "build:tauri": "echo 'Not implemented yet'",
     "dev": "pnpm run start:webui",
