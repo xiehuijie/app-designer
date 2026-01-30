@@ -3,8 +3,37 @@ import type * as T from '@app-designer/types'
 /**
  * 生成 z.string().email() 代码
  */
-export function generateEmail(_type: T.Email): string {
-  return 'z.string().email()'
+export function generateEmail(type: T.Email): string {
+  const parts: string[] = ['z.string().email()']
+
+  // 支持根据 mode 和 domain 生成白名单 / 黑名单域名校验
+  const emailType = type as unknown as {
+    mode?: 'whitelist' | 'blacklist'
+    domain?: string[] | string
+  }
+
+  const { mode } = emailType
+  const domain = emailType.domain
+
+  if (mode && domain !== undefined) {
+    const domainsArray = Array.isArray(domain) ? domain : [domain]
+
+    if (domainsArray.length > 0) {
+      const serializedDomains = JSON.stringify(domainsArray)
+
+      if (mode === 'whitelist') {
+        parts.push(
+          `.refine((value) => { const domain = value.split('@')[1]; if (!domain) return false; const allowed = ${serializedDomains}; return allowed.includes(domain); }, { message: 'Invalid email domain' })`,
+        )
+      } else if (mode === 'blacklist') {
+        parts.push(
+          `.refine((value) => { const domain = value.split('@')[1]; if (!domain) return false; const blocked = ${serializedDomains}; return !blocked.includes(domain); }, { message: 'Invalid email domain' })`,
+        )
+      }
+    }
+  }
+
+  return parts.join('')
 }
 
 /**
