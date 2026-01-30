@@ -104,6 +104,25 @@ export function generateCIDRv6(_type: T.CIDRv6): string {
 /**
  * 生成 MAC 地址验证代码
  */
-export function generateMAC(_type: T.MAC): string {
-  return 'z.string().regex(/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/)'
+export function generateMAC(type: T.MAC): string {
+  const baseSchema = 'z.string().regex(/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/)';
+
+  const mode = (type as any).mode;
+  const range = (type as any).range;
+
+  if (!mode || !Array.isArray(range) || range.length === 0) {
+    return baseSchema;
+  }
+
+  const rangeLiteral = JSON.stringify(range);
+
+  if (mode === 'allow') {
+    return `${baseSchema}.refine((value) => ${rangeLiteral}.includes(value))`;
+  }
+
+  if (mode === 'deny') {
+    return `${baseSchema}.refine((value) => !${rangeLiteral}.includes(value))`;
+  }
+
+  return baseSchema;
 }
