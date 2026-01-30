@@ -1,0 +1,230 @@
+import type * as T from '@app-designer/types'
+
+/**
+ * 生成 z.string().email() 代码
+ */
+export function generateEmail(type: T.Email): string {
+  const parts: string[] = ['z.string().email()']
+
+  // 支持根据 mode 和 domain 生成白名单 / 黑名单域名校验
+  const emailType = type as unknown as {
+    mode?: 'whitelist' | 'blacklist'
+    domain?: string[] | string
+  }
+
+  const { mode } = emailType
+  const domain = emailType.domain
+
+  if (mode && domain !== undefined) {
+    const domainsArray = Array.isArray(domain) ? domain : [domain]
+
+    if (domainsArray.length > 0) {
+      const serializedDomains = JSON.stringify(domainsArray)
+
+      if (mode === 'whitelist') {
+        parts.push(
+          `.refine((value) => { const domain = value.split('@')[1]; if (!domain) return false; const allowed = ${serializedDomains}; return allowed.includes(domain); }, { message: 'Invalid email domain' })`,
+        )
+      } else if (mode === 'blacklist') {
+        parts.push(
+          `.refine((value) => { const domain = value.split('@')[1]; if (!domain) return false; const blocked = ${serializedDomains}; return !blocked.includes(domain); }, { message: 'Invalid email domain' })`,
+        )
+      }
+    }
+  }
+
+  return parts.join('')
+}
+
+/**
+ * 生成 z.string().uuid() 代码
+ */
+export function generateUUID(_type: T.UUID): string {
+  return 'z.string().uuid()'
+}
+
+/**
+ * 生成 z.string().cuid() 代码
+ */
+export function generateCUID(_type: T.CUID): string {
+  return 'z.string().cuid()'
+}
+
+/**
+ * 生成 z.string().uuid() 代码 (GUID 等同于 UUID)
+ */
+export function generateGUID(_type: T.GUID): string {
+  return 'z.string().uuid()'
+}
+
+/**
+ * 生成 z.string().ulid() 代码
+ */
+export function generateULID(_type: T.ULID): string {
+  return 'z.string().ulid()'
+}
+
+/**
+ * 生成 z.string().nanoid() 代码
+ */
+export function generateNanoID(type: T.NanoID): string {
+  const parts: string[] = ['z.string()']
+
+  // 如果指定了 alphabet，使用正则表达式验证
+  if (type.alphabet !== undefined) {
+    // 转义特殊正则字符
+    const escapedAlphabet = type.alphabet.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    if (type.length !== undefined) {
+      parts.push(`.regex(/^[${escapedAlphabet}]{${type.length}}$/)`)
+    } else {
+      parts.push(`.regex(/^[${escapedAlphabet}]+$/)`)
+    }
+  } else {
+    parts.push('.nanoid()')
+    if (type.length !== undefined) {
+      parts.push(`.length(${type.length})`)
+    }
+  }
+
+  return parts.join('')
+}
+
+/**
+ * 生成 z.string().url() 代码
+ */
+export function generateURL(type: T.URL): string {
+  const parts: string[] = ['z.string().url()']
+
+  const hasProtocol = (type as any).protocol !== undefined
+  const hasDomain = (type as any).domain !== undefined
+  const hasPort = (type as any).port !== undefined
+  const hasPath = (type as any).path !== undefined
+
+  if (hasProtocol || hasDomain || hasPort || hasPath) {
+    const checks: string[] = []
+
+    if (hasProtocol) {
+      const protocol = (type as any).protocol
+      if (Array.isArray(protocol)) {
+        const list = JSON.stringify(protocol.map((p: string) => p.replace(/:$/, '')))
+        checks.push(
+          `if (!${list}.includes(url.protocol.replace(/:$/, ''))) { ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Invalid URL protocol' }); }`,
+        )
+      } else {
+        const value = JSON.stringify(String(protocol).replace(/:$/, ''))
+        checks.push(
+          `if (url.protocol.replace(/:$/, '') !== ${value}) { ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Invalid URL protocol' }); }`,
+        )
+      }
+    }
+
+    if (hasDomain) {
+      const domain = (type as any).domain
+      if (Array.isArray(domain)) {
+        const list = JSON.stringify(domain)
+        checks.push(
+          `if (!${list}.includes(url.hostname)) { ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Invalid URL domain' }); }`,
+        )
+      } else {
+        const value = JSON.stringify(String(domain))
+        checks.push(
+          `if (url.hostname !== ${value}) { ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Invalid URL domain' }); }`,
+        )
+      }
+    }
+
+    if (hasPort) {
+      const port = (type as any).port
+      if (Array.isArray(port)) {
+        const list = JSON.stringify(port.map((p: number) => String(p)))
+        checks.push(
+          `if (!${list}.includes(url.port)) { ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Invalid URL port' }); }`,
+        )
+      } else {
+        const value = JSON.stringify(String(port))
+        checks.push(
+          `if (url.port !== ${value}) { ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Invalid URL port' }); }`,
+        )
+      }
+    }
+
+    if (hasPath) {
+      const path = (type as any).path
+      if (Array.isArray(path)) {
+        const list = JSON.stringify(path)
+        checks.push(
+          `if (!${list}.some((prefix: string) => url.pathname.startsWith(prefix))) { ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Invalid URL path' }); }`,
+        )
+      } else {
+        const value = JSON.stringify(String(path))
+        checks.push(
+          `if (!url.pathname.startsWith(${value})) { ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Invalid URL path' }); }`,
+        )
+      }
+    }
+
+    const body = [
+      '(value, ctx) => {',
+      'try {',
+      'const url = new URL(value);',
+      '} catch {',
+      'return;',
+      '}',
+      ...checks,
+      '}',
+    ].join('')
+
+    parts.push(`.superRefine${body}`)
+  }
+
+  return parts.join('')
+}
+
+/**
+ * 生成颜色验证代码
+ * 支持 mode (whitelist/blacklist/none) 和 format (hex/hexa/rgb/rgba/hsl/hsla)
+ */
+export function generateColor(type: T.Color): string {
+  // 各种颜色格式的正则表达式
+  const formatPatterns: Record<string, string> = {
+    'hex': '#[A-Fa-f0-9]{6}',
+    'hexa': '#[A-Fa-f0-9]{8}',
+    'rgb': 'rgb\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*\\)',
+    'rgba': 'rgba\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*[0-9.]+\\s*\\)',
+    'hsl': 'hsl\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}%?\\s*,\\s*\\d{1,3}%?\\s*\\)',
+    'hsla': 'hsla\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}%?\\s*,\\s*\\d{1,3}%?\\s*,\\s*[0-9.]+\\s*\\)'
+  }
+
+  // 默认支持所有格式
+  const allFormats: string[] = ['hex', 'hexa', 'rgb', 'rgba', 'hsl', 'hsla']
+  
+  let allowedFormats: string[] = [...allFormats]
+  
+  // 根据 mode 和 format 确定允许的格式
+  if (type.format !== undefined) {
+    const formats: string[] = Array.isArray(type.format) ? type.format : [type.format as string]
+    
+    if (type.mode === 'whitelist') {
+      allowedFormats = formats.filter(f => allFormats.includes(f))
+    } else if (type.mode === 'blacklist') {
+      allowedFormats = allFormats.filter(f => !formats.includes(f))
+    }
+  }
+
+  if (allowedFormats.length === 0) {
+    return 'z.never()'
+  }
+
+  // 构建正则表达式
+  const patterns = allowedFormats.map(f => formatPatterns[f]).filter(Boolean)
+  const combinedPattern = `^(${patterns.join('|')})$`
+
+  return `z.string().regex(/${combinedPattern}/)`
+}
+
+/**
+ * 生成时区验证代码
+ */
+export function generateTimezone(_type: T.Timezone): string {
+  return 'z.string()'
+}
