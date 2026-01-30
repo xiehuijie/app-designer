@@ -53,6 +53,12 @@ export function generateTuple(type: T.Tuple): string {
  * 生成 z.union() 代码 (anyOf)
  */
 export function generateAnyOf(type: T.AnyOf): string {
+  if (type.types.length === 0) {
+    return 'z.never()'
+  }
+  if (type.types.length === 1) {
+    return generateZod(type.types[0])
+  }
   const types = type.types.map(t => generateZod(t)).join(', ')
   return `z.union([${types}])`
 }
