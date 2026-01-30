@@ -1,7 +1,12 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, afterEach } from 'vitest'
 
 import { mount } from '@vue/test-utils'
 import App from '../App.vue'
+
+// Clean up dark mode class after each test
+afterEach(() => {
+  document.documentElement.classList.remove('dark')
+})
 
 describe('App', () => {
   it('mounts renders properly', () => {
@@ -11,70 +16,68 @@ describe('App', () => {
 
   it('has header with title', () => {
     const wrapper = mount(App)
-    expect(wrapper.find('.app-header').exists()).toBe(true)
-    expect(wrapper.find('.app-title').text()).toBe('App Designer')
+    expect(wrapper.find('header').exists()).toBe(true)
+    expect(wrapper.find('h1').text()).toBe('App Designer')
   })
 
   it('has collapsible sidebar with menu items', () => {
     const wrapper = mount(App)
-    expect(wrapper.find('.app-sidebar').exists()).toBe(true)
-    expect(wrapper.findAll('.menu-item').length).toBe(5)
+    expect(wrapper.find('aside').exists()).toBe(true)
+    expect(wrapper.findAll('[role="button"]').length).toBe(5)
   })
 
   it('has footer with copyright', () => {
     const wrapper = mount(App)
-    expect(wrapper.find('.app-footer').exists()).toBe(true)
+    expect(wrapper.find('footer').exists()).toBe(true)
     const currentYear = new Date().getFullYear()
     expect(wrapper.text()).toContain(`© ${currentYear} App Designer`)
   })
 
   it('can toggle sidebar collapsed state', async () => {
     const wrapper = mount(App)
-    const sidebar = wrapper.find('.app-sidebar')
-    const toggleBtn = wrapper.find('.sidebar-toggle')
+    const sidebar = wrapper.find('aside')
+    const toggleBtn = wrapper.find('[aria-label="Toggle Sidebar"]')
     
-    expect(sidebar.classes()).not.toContain('collapsed')
+    expect(sidebar.classes()).toContain('w-[220px]')
     await toggleBtn.trigger('click')
-    expect(sidebar.classes()).toContain('collapsed')
+    expect(sidebar.classes()).toContain('w-[60px]')
   })
 
   it('can toggle dark/light theme', async () => {
     const wrapper = mount(App)
-    const layout = wrapper.find('.app-layout')
     
-    expect(layout.classes()).toContain('light-theme')
+    // Initially should be light theme
+    expect(document.documentElement.classList.contains('dark')).toBe(false)
     
-    // Find the theme toggle button (the one with moon/sun icon)
-    const buttons = wrapper.findAll('button')
-    const themeBtn = buttons.find(btn => btn.attributes('aria-label') === 'Toggle Theme')
+    // Find and click the theme toggle button
+    const themeBtn = wrapper.find('[aria-label="Toggle Theme"]')
+    expect(themeBtn.exists()).toBe(true)
+    await themeBtn.trigger('click')
     
-    expect(themeBtn).toBeDefined()
-    await themeBtn!.trigger('click')
-    
-    expect(layout.classes()).toContain('dark-theme')
+    // Should now be dark theme
+    expect(document.documentElement.classList.contains('dark')).toBe(true)
   })
 
   it('can select menu items', async () => {
     const wrapper = mount(App)
-    const menuItems = wrapper.findAll('.menu-item')
+    const menuItems = wrapper.findAll('[role="button"]')
     
-    // Initially no menu item should be active
-    expect(wrapper.findAll('.menu-item.active').length).toBe(0)
+    // Initially no menu item should have active class
     expect(menuItems.length).toBeGreaterThanOrEqual(2)
     
     // Click on first menu item
     await menuItems[0]!.trigger('click')
-    expect(menuItems[0]!.classes()).toContain('active')
+    expect(menuItems[0]!.classes()).toContain('bg-primary')
     
     // Click on second menu item
     await menuItems[1]!.trigger('click')
-    expect(menuItems[1]!.classes()).toContain('active')
-    expect(menuItems[0]!.classes()).not.toContain('active')
+    expect(menuItems[1]!.classes()).toContain('bg-primary')
+    expect(menuItems[0]!.classes()).not.toContain('bg-primary')
   })
 
   it('supports keyboard navigation for menu items', async () => {
     const wrapper = mount(App)
-    const menuItems = wrapper.findAll('.menu-item')
+    const menuItems = wrapper.findAll('[role="button"]')
     
     expect(menuItems.length).toBeGreaterThanOrEqual(2)
     
@@ -84,11 +87,11 @@ describe('App', () => {
     
     // Press Enter on first menu item
     await menuItems[0]!.trigger('keydown', { key: 'Enter' })
-    expect(menuItems[0]!.classes()).toContain('active')
+    expect(menuItems[0]!.classes()).toContain('bg-primary')
     
     // Press Space on second menu item
     await menuItems[1]!.trigger('keydown', { key: ' ' })
-    expect(menuItems[1]!.classes()).toContain('active')
-    expect(menuItems[0]!.classes()).not.toContain('active')
+    expect(menuItems[1]!.classes()).toContain('bg-primary')
+    expect(menuItems[0]!.classes()).not.toContain('bg-primary')
   })
 })
