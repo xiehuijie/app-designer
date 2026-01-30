@@ -1,424 +1,319 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { Graph } from '@antv/x6'
+import { ref, computed } from 'vue'
 import Button from 'primevue/button'
-import Card from 'primevue/card'
-import { setProvider, getProvider, type FileEntry } from './provider'
-import { createRemoteProvider } from './provider/remote'
 
-const containerRef = ref<HTMLDivElement | null>(null)
+// Sidebar state
+const sidebarCollapsed = ref(false)
 
-// PrimeVue demo
-const buttonText = ref('Click Me!')
-const messageText = ref('Welcome to PrimeVue!')
+// Theme state (light/dark)
+const isDarkMode = ref(false)
 
-const handleButtonClick = () => {
-  messageText.value = `Button clicked at ${new Date().toLocaleTimeString()}`
+// Menu items for demo
+const menuItems = ref([
+  { id: 1, label: '菜单项 1', icon: 'pi pi-home' },
+  { id: 2, label: '菜单项 2', icon: 'pi pi-file' },
+  { id: 3, label: '菜单项 3', icon: 'pi pi-cog' },
+  { id: 4, label: '菜单项 4', icon: 'pi pi-chart-bar' },
+  { id: 5, label: '菜单项 5', icon: 'pi pi-users' },
+])
+
+const activeMenuItem = ref<number | null>(null)
+
+// Current year for copyright
+const currentYear = new Date().getFullYear()
+
+// Toggle sidebar
+const toggleSidebar = () => {
+  sidebarCollapsed.value = !sidebarCollapsed.value
 }
 
-// Provider 测试相关
-const providerStatus = ref<'idle' | 'loading' | 'connected' | 'error'>('idle')
-const providerMessage = ref('')
-const directoryPath = ref('/workspaces/app-designer')
-const directoryItems = ref<FileEntry[]>([])
-const isLoadingDir = ref(false)
-const dirError = ref('')
-
-// 初始化 Provider
-const initProvider = async () => {
-  providerStatus.value = 'loading'
-  providerMessage.value = '正在连接到后端服务...'
-  
-  try {
-    const provider = createRemoteProvider('http://localhost:3001')
-    setProvider(provider)
-    
-    // 健康检查
-    const health = await provider.healthCheck()
-    providerStatus.value = 'connected'
-    providerMessage.value = `已连接到 ${health.provider} 后端，状态: ${health.status}`
-  } catch (error) {
-    providerStatus.value = 'error'
-    providerMessage.value = `连接失败: ${(error as Error).message}`
-  }
+// Toggle theme
+const toggleTheme = () => {
+  isDarkMode.value = !isDarkMode.value
 }
 
-// 列出目录内容
-const listDirectory = async () => {
-  if (providerStatus.value !== 'connected') {
-    dirError.value = '请先连接到后端服务'
-    return
-  }
-  
-  isLoadingDir.value = true
-  dirError.value = ''
-  directoryItems.value = []
-  
-  try {
-    const provider = getProvider()
-    const result = await provider.listDirectory(directoryPath.value)
-    directoryItems.value = result.items
-  } catch (error) {
-    dirError.value = `读取目录失败: ${(error as Error).message}`
-  } finally {
-    isLoadingDir.value = false
+// Select menu item
+const selectMenuItem = (id: number) => {
+  activeMenuItem.value = id
+}
+
+// Handle keyboard navigation for menu items
+const handleMenuKeydown = (event: KeyboardEvent, id: number) => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault()
+    selectMenuItem(id)
   }
 }
 
-// 点击目录项导航
-const navigateTo = (item: FileEntry) => {
-  if (item.isDirectory) {
-    directoryPath.value = item.path
-    listDirectory()
-  }
-}
-
-// 返回上级目录
-const goUp = () => {
-  const parts = directoryPath.value.split('/')
-  if (parts.length > 1) {
-    parts.pop()
-    directoryPath.value = parts.join('/') || '/'
-    listDirectory()
-  }
-}
-
-// X6 graph initialization
-onMounted(() => {
-  if (containerRef.value) {
-    const graph = new Graph({
-      container: containerRef.value,
-      width: 800,
-      height: 600,
-      background: {
-        color: '#F2F7FA'
-      },
-      grid: {
-        size: 10,
-        visible: true
-      }
-    })
-
-    // Add some sample nodes and edges
-    graph.addNode({
-      id: 'node-1',
-      shape: 'rect',
-      x: 100,
-      y: 100,
-      width: 100,
-      height: 60,
-      label: 'Node 1',
-      attrs: {
-        body: {
-          fill: '#5F95FF',
-          stroke: '#0051CC'
-        },
-        label: {
-          fill: '#ffffff',
-          fontSize: 14
-        }
-      }
-    })
-
-    graph.addNode({
-      id: 'node-2',
-      shape: 'rect',
-      x: 320,
-      y: 100,
-      width: 100,
-      height: 60,
-      label: 'Node 2',
-      attrs: {
-        body: {
-          fill: '#F08080',
-          stroke: '#D82828'
-        },
-        label: {
-          fill: '#ffffff',
-          fontSize: 14
-        }
-      }
-    })
-
-    graph.addEdge({
-      source: 'node-1',
-      target: 'node-2',
-      attrs: {
-        line: {
-          stroke: '#999999',
-          strokeWidth: 2
-        }
-      }
-    })
-  }
-})
+// Computed class for theme
+const themeClass = computed(() => isDarkMode.value ? 'dark-theme' : 'light-theme')
 </script>
 
 <template>
-  <div class="app-container">
-    <h1>Vue 3 + PrimeVue + AntV X6 Demo</h1>
-    
-    <!-- Provider 测试区域 -->
-    <div class="demo-section">
-      <Card>
-        <template #title>🔌 Provider 连接测试</template>
-        <template #subtitle>测试与 @app-designer/local 后端的连接</template>
-        <template #content>
-          <div class="provider-demo">
-            <div class="connection-status">
-              <span 
-                class="status-indicator" 
-                :class="{
-                  'status-idle': providerStatus === 'idle',
-                  'status-loading': providerStatus === 'loading',
-                  'status-connected': providerStatus === 'connected',
-                  'status-error': providerStatus === 'error'
-                }"
-              ></span>
-              <span>{{ providerMessage || '未连接' }}</span>
-            </div>
-            <Button 
-              label="连接后端" 
-              @click="initProvider"
-              :loading="providerStatus === 'loading'"
-              :disabled="providerStatus === 'connected'"
-              class="p-button-primary"
-            />
-          </div>
-        </template>
-      </Card>
-    </div>
+  <div class="app-layout" :class="themeClass">
+    <!-- Header / Title Bar -->
+    <header class="app-header">
+      <div class="header-left">
+        <Button 
+          icon="pi pi-bars" 
+          text 
+          @click="toggleSidebar"
+          class="sidebar-toggle"
+          aria-label="Toggle Sidebar"
+        />
+        <h1 class="app-title">App Designer</h1>
+      </div>
+      <div class="header-right">
+        <Button 
+          icon="pi pi-globe" 
+          text 
+          aria-label="Language"
+          class="header-btn"
+        />
+        <Button 
+          :icon="isDarkMode ? 'pi pi-sun' : 'pi pi-moon'" 
+          text 
+          @click="toggleTheme"
+          aria-label="Toggle Theme"
+          class="header-btn"
+        />
+      </div>
+    </header>
 
-    <!-- 文件系统浏览器 -->
-    <div class="demo-section" v-if="providerStatus === 'connected'">
-      <Card>
-        <template #title>📁 文件系统浏览器</template>
-        <template #subtitle>通过 Provider 访问本地文件系统</template>
-        <template #content>
-          <div class="file-browser">
-            <div class="path-input">
-              <input 
-                v-model="directoryPath" 
-                type="text" 
-                placeholder="输入目录路径"
-                @keyup.enter="listDirectory"
-              />
-              <Button label="浏览" @click="listDirectory" :loading="isLoadingDir" />
-              <Button label="↑ 上级" @click="goUp" severity="secondary" />
-            </div>
-            
-            <div v-if="dirError" class="error-message">{{ dirError }}</div>
-            
-            <div class="file-list" v-if="directoryItems.length > 0">
-              <div 
-                v-for="item in directoryItems" 
-                :key="item.path"
-                class="file-item"
-                :class="{ 'is-directory': item.isDirectory }"
-                @click="navigateTo(item)"
-              >
-                <span class="file-icon">{{ item.isDirectory ? '📂' : '📄' }}</span>
-                <span class="file-name">{{ item.name }}</span>
-              </div>
-            </div>
-            
-            <div v-else-if="!isLoadingDir && !dirError" class="empty-message">
-              点击"浏览"按钮查看目录内容
-            </div>
-          </div>
-        </template>
-      </Card>
-    </div>
-
-    <div class="demo-section">
-      <Card>
-        <template #title>PrimeVue Components Demo</template>
-        <template #subtitle>Interactive PrimeVue Button Component</template>
-        <template #content>
-          <div class="primevue-demo">
-            <Button 
-              :label="buttonText" 
-              @click="handleButtonClick"
-              class="p-button-success"
-            />
-            <p class="message">{{ messageText }}</p>
-          </div>
-        </template>
-      </Card>
-    </div>
-
-    <div class="demo-section">
-      <Card>
-        <template #title>AntV X6 Graph Editor Demo</template>
-        <template #subtitle>Interactive Graph with Nodes and Edges</template>
-        <template #content>
+    <!-- Main Container -->
+    <div class="app-body">
+      <!-- Sidebar -->
+      <aside class="app-sidebar" :class="{ collapsed: sidebarCollapsed }">
+        <nav class="sidebar-menu">
           <div 
-            ref="containerRef" 
-            class="x6-container"
-          ></div>
-        </template>
-      </Card>
+            v-for="item in menuItems" 
+            :key="item.id"
+            class="menu-item"
+            :class="{ active: activeMenuItem === item.id }"
+            @click="selectMenuItem(item.id)"
+            @keydown="handleMenuKeydown($event, item.id)"
+            tabindex="0"
+            role="button"
+            :aria-label="item.label"
+          >
+            <i :class="item.icon" class="menu-icon"></i>
+            <span v-if="!sidebarCollapsed" class="menu-label">{{ item.label }}</span>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content Area -->
+      <main class="app-main">
+        <div class="content-area">
+          <!-- Content placeholder -->
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+          <div class="footer-left">
+            <span class="copyright">© {{ currentYear }} App Designer</span>
+          </div>
+          <div class="footer-right">
+            <Button label="MIT License" text size="small" class="footer-btn" />
+            <Button label="GitHub" text size="small" class="footer-btn" />
+            <Button label="文档" text size="small" class="footer-btn" />
+          </div>
+        </footer>
+      </main>
     </div>
   </div>
 </template>
 
 <style scoped>
-.app-container {
-  padding: 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+/* Layout Variables */
+.app-layout {
+  --header-height: 48px;
+  --sidebar-width: 220px;
+  --sidebar-collapsed-width: 60px;
+  --footer-height: 36px;
+  
+  /* Light theme colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-sidebar: #f0f2f5;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --border-color: #e5e7eb;
+  --accent-color: #3b82f6;
+  --hover-bg: #e5e7eb;
+}
+
+.app-layout.dark-theme {
+  --bg-primary: #1f2937;
+  --bg-secondary: #111827;
+  --bg-sidebar: #1a1f2c;
+  --text-primary: #f9fafb;
+  --text-secondary: #9ca3af;
+  --border-color: #374151;
+  --accent-color: #60a5fa;
+  --hover-bg: #374151;
+}
+
+/* Root Layout */
+.app-layout {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
-h1 {
-  text-align: center;
-  color: #ffffff;
-  margin-bottom: 2rem;
-  font-size: 2rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.demo-section {
-  margin-bottom: 2rem;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
-}
-
-.primevue-demo {
+/* Header */
+.app-header {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem;
+  justify-content: space-between;
+  height: var(--header-height);
+  padding: 0 16px;
+  background-color: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
 }
 
-.message {
-  font-size: 1.1rem;
-  color: #333;
-  min-height: 1.5rem;
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar-toggle {
+  color: var(--text-primary);
+}
+
+.app-title {
+  font-size: 1.125rem;
+  font-weight: 600;
   margin: 0;
+  color: var(--text-primary);
 }
 
-.x6-container {
-  width: 100%;
-  height: 600px;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  background: #f5f5f5;
-}
-
-/* Provider 测试样式 */
-.provider-demo {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
-}
-
-.connection-status {
+.header-right {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.95rem;
+  gap: 4px;
 }
 
-.status-indicator {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  display: inline-block;
+.header-btn {
+  color: var(--text-secondary);
 }
 
-.status-idle {
-  background-color: #9e9e9e;
+.header-btn:hover {
+  color: var(--text-primary);
 }
 
-.status-loading {
-  background-color: #ff9800;
-  animation: pulse 1s infinite;
-}
-
-.status-connected {
-  background-color: #4caf50;
-}
-
-.status-error {
-  background-color: #f44336;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-/* 文件浏览器样式 */
-.file-browser {
-  padding: 1rem;
-}
-
-.path-input {
+/* Body Container */
+.app-body {
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.path-input input {
   flex: 1;
-  padding: 0.5rem 1rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 0.95rem;
+  overflow: hidden;
 }
 
-.file-list {
-  max-height: 300px;
-  overflow-y: auto;
-  border: 1px solid #eee;
-  border-radius: 4px;
+/* Sidebar */
+.app-sidebar {
+  width: var(--sidebar-width);
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid var(--border-color);
+  transition: width 0.2s ease;
+  flex-shrink: 0;
+  overflow-x: hidden;
 }
 
-.file-item {
+.app-sidebar.collapsed {
+  width: var(--sidebar-collapsed-width);
+}
+
+.sidebar-menu {
+  padding: 8px;
+}
+
+.menu-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  border-bottom: 1px solid #f0f0f0;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.15s ease;
+  white-space: nowrap;
+  color: var(--text-secondary);
 }
 
-.file-item:hover {
-  background-color: #f5f5f5;
+.menu-item:hover {
+  background-color: var(--hover-bg);
+  color: var(--text-primary);
 }
 
-.file-item.is-directory {
+.menu-item.active {
+  background-color: var(--accent-color);
+  color: #ffffff;
+}
+
+.menu-icon {
+  font-size: 1rem;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.menu-label {
+  font-size: 0.875rem;
   font-weight: 500;
 }
 
-.file-item:last-child {
-  border-bottom: none;
-}
-
-.file-icon {
-  font-size: 1.2rem;
-}
-
-.file-name {
+/* Main Content */
+.app-main {
+  display: flex;
+  flex-direction: column;
   flex: 1;
+  overflow: hidden;
 }
 
-.error-message {
-  color: #f44336;
-  padding: 0.5rem;
-  background-color: #ffebee;
-  border-radius: 4px;
-  margin-bottom: 1rem;
+.content-area {
+  flex: 1;
+  padding: 16px;
+  overflow: auto;
+  background-color: var(--bg-secondary);
 }
 
-.empty-message {
-  color: #666;
-  text-align: center;
-  padding: 2rem;
+/* Footer */
+.app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--footer-height);
+  padding: 0 16px;
+  background-color: var(--bg-primary);
+  border-top: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+}
+
+.copyright {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.footer-btn {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.footer-btn:hover {
+  color: var(--text-primary);
 }
 </style>
