@@ -80,8 +80,92 @@ export function generateNanoID(type: T.NanoID): string {
 /**
  * 生成 z.string().url() 代码
  */
-export function generateURL(_type: T.URL): string {
-  return 'z.string().url()'
+export function generateURL(type: T.URL): string {
+  const parts: string[] = ['z.string().url()']
+
+  const hasProtocol = (type as any).protocol !== undefined
+  const hasDomain = (type as any).domain !== undefined
+  const hasPort = (type as any).port !== undefined
+  const hasPath = (type as any).path !== undefined
+
+  if (hasProtocol || hasDomain || hasPort || hasPath) {
+    const checks: string[] = []
+
+    if (hasProtocol) {
+      const protocol = (type as any).protocol
+      if (Array.isArray(protocol)) {
+        const list = JSON.stringify(protocol.map((p: string) => p.replace(/:$/, '')))
+        checks.push(
+          `if (!${list}.includes(url.protocol.replace(/:$/, ''))) { ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Invalid URL protocol' }); }`,
+        )
+      } else {
+        const value = JSON.stringify(String(protocol).replace(/:$/, ''))
+        checks.push(
+          `if (url.protocol.replace(/:$/, '') !== ${value}) { ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Invalid URL protocol' }); }`,
+        )
+      }
+    }
+
+    if (hasDomain) {
+      const domain = (type as any).domain
+      if (Array.isArray(domain)) {
+        const list = JSON.stringify(domain)
+        checks.push(
+          `if (!${list}.includes(url.hostname)) { ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Invalid URL domain' }); }`,
+        )
+      } else {
+        const value = JSON.stringify(String(domain))
+        checks.push(
+          `if (url.hostname !== ${value}) { ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Invalid URL domain' }); }`,
+        )
+      }
+    }
+
+    if (hasPort) {
+      const port = (type as any).port
+      if (Array.isArray(port)) {
+        const list = JSON.stringify(port.map((p: number) => String(p)))
+        checks.push(
+          `if (!${list}.includes(url.port)) { ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Invalid URL port' }); }`,
+        )
+      } else {
+        const value = JSON.stringify(String(port))
+        checks.push(
+          `if (url.port !== ${value}) { ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Invalid URL port' }); }`,
+        )
+      }
+    }
+
+    if (hasPath) {
+      const path = (type as any).path
+      if (Array.isArray(path)) {
+        const list = JSON.stringify(path)
+        checks.push(
+          `if (!${list}.some((prefix: string) => url.pathname.startsWith(prefix))) { ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Invalid URL path' }); }`,
+        )
+      } else {
+        const value = JSON.stringify(String(path))
+        checks.push(
+          `if (!url.pathname.startsWith(${value})) { ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Invalid URL path' }); }`,
+        )
+      }
+    }
+
+    const body = [
+      '(value, ctx) => {',
+      'try {',
+      'const url = new URL(value);',
+      '} catch {',
+      'return;',
+      '}',
+      ...checks,
+      '}',
+    ].join('')
+
+    parts.push(`.superRefine${body}`)
+  }
+
+  return parts.join('')
 }
 
 /**
