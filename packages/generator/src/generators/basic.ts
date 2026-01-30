@@ -62,9 +62,22 @@ export function generateLiteral(type: T.Literal): string {
 
 /**
  * 生成 z.enum() 代码
+ * 注意：Zod 的 z.enum() 仅支持字符串数组，
+ * 但可以通过 z.nativeEnum() 支持 number/boolean 等类型
+ * 这里使用 union of literals 来统一处理所有类型
  */
 export function generateEnum(type: T.Enum): string {
-  // Zod enum 只支持字符串数组
+  // 处理空数组情况
+  if (type.values.length === 0) {
+    return 'z.never()'
+  }
+
+  // 单个值情况直接使用 literal
+  if (type.values.length === 1) {
+    return `z.literal(${JSON.stringify(type.values[0])})`
+  }
+
+  // Zod z.enum() 仅支持字符串数组，对于包含 number/boolean/null 的枚举使用 union of literals
   const hasNonString = type.values.some(v => typeof v !== 'string')
   
   if (hasNonString) {

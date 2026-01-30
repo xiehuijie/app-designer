@@ -1,4 +1,5 @@
 import type * as T from '@app-designer/types'
+import { generateZod, registerGenerator } from './generateZod'
 
 // 导入各类生成器
 import {
@@ -8,13 +9,19 @@ import {
   generateLiteral,
   generateEnum,
   generateNull,
-  generateAny,
+  generateAny
+} from './generators/basic'
+
+import {
   generateArray,
   generateObject,
   generateTuple,
   generateAnyOf,
   generateAllOf,
-  generateOneOf,
+  generateOneOf
+} from './generators/composite'
+
+import {
   generateEmail,
   generateUUID,
   generateCUID,
@@ -23,96 +30,98 @@ import {
   generateNanoID,
   generateURL,
   generateColor,
-  generateTimezone,
+  generateTimezone
+} from './generators/formatted'
+
+import {
   generateBase32,
   generateBase36,
   generateBase64,
   generateBase64URL,
   generateHex,
-  generateHash,
+  generateHash
+} from './generators/binary'
+
+import {
   generateIPv4,
   generateIPv6,
   generateCIDRv4,
   generateCIDRv6,
-  generateMAC,
+  generateMAC
+} from './generators/network'
+
+import {
   generateDate,
   generateTime,
   generateDateTime,
-  generateDuration,
-  generateReference
-} from './generators'
+  generateDuration
+} from './generators/time'
 
-/**
- * 类型到生成器的映射表
- */
-const generatorMap: Record<string, (type: any) => string> = {
-  // 基础类型
-  'string': generateString,
-  'number': generateNumber,
-  'boolean': generateBoolean,
-  'literal': generateLiteral,
-  'enum': generateEnum,
-  'null': generateNull,
-  'any': generateAny,
+import { generateReference } from './generators/reference'
 
-  // 复合类型
-  'array': generateArray,
-  'object': generateObject,
-  'tuple': generateTuple,
-  'anyOf': generateAnyOf,
-  'allOf': generateAllOf,
-  'oneOf': generateOneOf,
+// 注册基础类型生成器
+registerGenerator('string', generateString)
+registerGenerator('number', generateNumber)
+registerGenerator('boolean', generateBoolean)
+registerGenerator('literal', generateLiteral)
+registerGenerator('enum', generateEnum)
+registerGenerator('null', generateNull)
+registerGenerator('any', generateAny)
 
-  // 格式化类型
-  'email': generateEmail,
-  'uuid': generateUUID,
-  'cuid': generateCUID,
-  'guid': generateGUID,
-  'ulid': generateULID,
-  'nanoid': generateNanoID,
-  'url': generateURL,
-  'color': generateColor,
-  'timezone': generateTimezone,
+// 注册复合类型生成器
+registerGenerator('array', generateArray)
+registerGenerator('object', generateObject)
+registerGenerator('tuple', generateTuple)
+registerGenerator('anyOf', generateAnyOf)
+registerGenerator('allOf', generateAllOf)
+registerGenerator('oneOf', generateOneOf)
 
-  // 二进制类型
-  'base32': generateBase32,
-  'base36': generateBase36,
-  'base64': generateBase64,
-  'base64url': generateBase64URL,
-  'hex': generateHex,
-  'hash': generateHash,
+// 注册格式化类型生成器
+registerGenerator('email', generateEmail)
+registerGenerator('uuid', generateUUID)
+registerGenerator('cuid', generateCUID)
+registerGenerator('guid', generateGUID)
+registerGenerator('ulid', generateULID)
+registerGenerator('nanoid', generateNanoID)
+registerGenerator('url', generateURL)
+registerGenerator('color', generateColor)
+registerGenerator('timezone', generateTimezone)
 
-  // 网络类型
-  'ipv4': generateIPv4,
-  'ipv6': generateIPv6,
-  'cidrv4': generateCIDRv4,
-  'cidrv6': generateCIDRv6,
-  'mac': generateMAC,
+// 注册二进制类型生成器
+registerGenerator('base32', generateBase32)
+registerGenerator('base36', generateBase36)
+registerGenerator('base64', generateBase64)
+registerGenerator('base64url', generateBase64URL)
+registerGenerator('hex', generateHex)
+registerGenerator('hash', generateHash)
 
-  // 时间类型
-  'date': generateDate,
-  'time': generateTime,
-  'datetime': generateDateTime,
-  'duration': generateDuration,
+// 注册网络类型生成器
+registerGenerator('ipv4', generateIPv4)
+registerGenerator('ipv6', generateIPv6)
+registerGenerator('cidrv4', generateCIDRv4)
+registerGenerator('cidrv6', generateCIDRv6)
+registerGenerator('mac', generateMAC)
 
-  // 引用类型
-  'ref': generateReference
-}
+// 注册时间类型生成器
+registerGenerator('date', generateDate)
+registerGenerator('time', generateTime)
+registerGenerator('datetime', generateDateTime)
+registerGenerator('duration', generateDuration)
 
-/**
- * 根据类型定义生成 Zod 验证代码
- * @param type 类型定义对象
- * @returns 生成的 Zod 代码字符串
- */
-export function generateZod(type: T.Type): string {
-  const generator = generatorMap[type.type]
+// 注册引用类型生成器
+registerGenerator('ref', generateReference)
 
-  if (!generator) {
-    throw new Error(`Unknown type: ${type.type}`)
-  }
+// 导出主函数
+export { generateZod } from './generateZod'
 
-  return generator(type)
-}
+// 导出类型注册表相关函数
+export { registerType, resolveReference, clearTypeRegistry, getRegisteredTypes } from './registry'
 
 // 导出所有生成器函数供需要时单独使用
-export * from './generators'
+export * from './generators/basic'
+export * from './generators/composite'
+export * from './generators/formatted'
+export * from './generators/binary'
+export * from './generators/network'
+export * from './generators/time'
+export * from './generators/reference'

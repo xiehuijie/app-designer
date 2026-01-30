@@ -1,10 +1,9 @@
 import type * as T from '@app-designer/types'
-import { generateZod } from '../index'
 
 /**
  * 生成 z.array() 代码
  */
-export function generateArray(type: T.Array): string {
+export function generateArray(type: T.Array, generateZod: (type: T.Type) => string): string {
   const itemSchema = generateZod(type.itemType)
   const parts: string[] = [`z.array(${itemSchema})`]
 
@@ -21,7 +20,7 @@ export function generateArray(type: T.Array): string {
 /**
  * 生成 z.object() 代码
  */
-export function generateObject(type: T.Object): string {
+export function generateObject(type: T.Object, generateZod: (type: T.Type) => string): string {
   const properties = Object.entries(type.properties)
     .map(([key, value]) => {
       const schema = generateZod(value)
@@ -44,7 +43,7 @@ export function generateObject(type: T.Object): string {
 /**
  * 生成 z.tuple() 代码
  */
-export function generateTuple(type: T.Tuple): string {
+export function generateTuple(type: T.Tuple, generateZod: (type: T.Type) => string): string {
   const items = type.items.map(item => generateZod(item)).join(', ')
   return `z.tuple([${items}])`
 }
@@ -52,7 +51,7 @@ export function generateTuple(type: T.Tuple): string {
 /**
  * 生成 z.union() 代码 (anyOf)
  */
-export function generateAnyOf(type: T.AnyOf): string {
+export function generateAnyOf(type: T.AnyOf, generateZod: (type: T.Type) => string): string {
   if (type.types.length === 0) {
     return 'z.never()'
   }
@@ -66,7 +65,7 @@ export function generateAnyOf(type: T.AnyOf): string {
 /**
  * 生成 z.intersection() 代码 (allOf)
  */
-export function generateAllOf(type: T.AllOf): string {
+export function generateAllOf(type: T.AllOf, generateZod: (type: T.Type) => string): string {
   if (type.types.length === 0) {
     return 'z.never()'
   }
@@ -85,7 +84,13 @@ export function generateAllOf(type: T.AllOf): string {
 /**
  * 生成 z.discriminatedUnion() 或 z.union() 代码 (oneOf)
  */
-export function generateOneOf(type: T.OneOf): string {
+export function generateOneOf(type: T.OneOf, generateZod: (type: T.Type) => string): string {
+  if (type.types.length === 0) {
+    return 'z.never()'
+  }
+  if (type.types.length === 1) {
+    return generateZod(type.types[0])
+  }
   const types = type.types.map(t => generateZod(t)).join(', ')
   return `z.union([${types}])`
 }

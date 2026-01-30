@@ -10,7 +10,11 @@
   "dependencies": {
     "@app-designer/types": "workspace:*"
   },
+  "peerDependencies": {
+    "zod": "^3.24.0"
+  },
   "devDependencies": {
-    "typescript": "~5.9.3"
+    "typescript": "~5.9.3",
+    "zod": "^3.24.0"
   }
 }

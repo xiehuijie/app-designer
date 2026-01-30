@@ -68,10 +68,22 @@ export function generateULID(_type: T.ULID): string {
  * 生成 z.string().nanoid() 代码
  */
 export function generateNanoID(type: T.NanoID): string {
-  const parts: string[] = ['z.string().nanoid()']
+  const parts: string[] = ['z.string()']
 
-  if (type.length !== undefined) {
-    parts.push(`.length(${type.length})`)
+  // 如果指定了 alphabet，使用正则表达式验证
+  if (type.alphabet !== undefined) {
+    // 转义特殊正则字符
+    const escapedAlphabet = type.alphabet.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    if (type.length !== undefined) {
+      parts.push(`.regex(/^[${escapedAlphabet}]{${type.length}}$/)`)
+    } else {
+      parts.push(`.regex(/^[${escapedAlphabet}]+$/)`)
+    }
+  } else {
+    parts.push('.nanoid()')
+    if (type.length !== undefined) {
+      parts.push(`.length(${type.length})`)
+    }
   }
 
   return parts.join('')
@@ -170,10 +182,44 @@ export function generateURL(type: T.URL): string {
 
 /**
  * 生成颜色验证代码
+ * 支持 mode (whitelist/blacklist/none) 和 format (hex/hexa/rgb/rgba/hsl/hsla)
  */
-export function generateColor(_type: T.Color): string {
-  // Zod 没有内置颜色验证，使用正则表达式
-  return 'z.string().regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3}|[A-Fa-f0-9]{8}|[A-Fa-f0-9]{4})$/)'
+export function generateColor(type: T.Color): string {
+  // 各种颜色格式的正则表达式
+  const formatPatterns: Record<string, string> = {
+    'hex': '#[A-Fa-f0-9]{6}',
+    'hexa': '#[A-Fa-f0-9]{8}',
+    'rgb': 'rgb\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*\\)',
+    'rgba': 'rgba\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*[0-9.]+\\s*\\)',
+    'hsl': 'hsl\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}%?\\s*,\\s*\\d{1,3}%?\\s*\\)',
+    'hsla': 'hsla\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}%?\\s*,\\s*\\d{1,3}%?\\s*,\\s*[0-9.]+\\s*\\)'
+  }
+
+  // 默认支持所有格式
+  const allFormats: string[] = ['hex', 'hexa', 'rgb', 'rgba', 'hsl', 'hsla']
+  
+  let allowedFormats: string[] = [...allFormats]
+  
+  // 根据 mode 和 format 确定允许的格式
+  if (type.format !== undefined) {
+    const formats: string[] = Array.isArray(type.format) ? type.format : [type.format as string]
+    
+    if (type.mode === 'whitelist') {
+      allowedFormats = formats.filter(f => allFormats.includes(f))
+    } else if (type.mode === 'blacklist') {
+      allowedFormats = allFormats.filter(f => !formats.includes(f))
+    }
+  }
+
+  if (allowedFormats.length === 0) {
+    return 'z.never()'
+  }
+
+  // 构建正则表达式
+  const patterns = allowedFormats.map(f => formatPatterns[f]).filter(Boolean)
+  const combinedPattern = `^(${patterns.join('|')})$`
+
+  return `z.string().regex(/${combinedPattern}/)`
 }
 
 /**
