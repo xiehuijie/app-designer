@@ -22,6 +22,14 @@
       {
         "fileMatch": "appmeta.json",
         "url": "./schemas/appmeta.schema.json"
+      },
+      {
+        "fileMatch": [
+          "*.type.json",
+          "*.field.json",
+          "*.struct.json"
+        ],
+        "url": "./schemas/types/main.schema.json"
       }
     ]
   },
