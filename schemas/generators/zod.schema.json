@@ -1,0 +1,20 @@
+{
+    "title": "ZodGenerator",
+    "description": "用于描述Zod生成器的配置",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string",
+            "const": "zod",
+            "description": "生成器的类型，固定为`zod`。"
+        },
+        "outputPath": {
+            "type": "string",
+            "description": "生成的Zod文件的输出路径。"
+        }
+    },
+    "required": [
+        "type",
+        "outputPath"
+    ]
+}

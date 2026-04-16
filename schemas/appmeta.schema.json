@@ -2,6 +2,12 @@
     "title": "AppMeta",
     "description": "用于描述应用程序元数据的 JSON Schema",
     "type": "object",
+    "definitions": {
+        "languageCode": {
+            "type": "string",
+            "description": "语言代码，例如`zh`、`en`、`ja`。"
+        }
+    },
     "properties": {
         "name": {
             "type": "string",
@@ -15,6 +21,10 @@
             "type": "string",
             "description": "应用程序的版本号。例如`1.0.0`。"
         },
+        "author": {
+            "type": "string",
+            "description": "应用程序的作者"
+        },
         "languages": {
             "type": "array",
             "description": "应用程序支持的语言列表。",
@@ -22,8 +32,7 @@
                 "type": "object",
                 "properties": {
                     "code": {
-                        "type": "string",
-                        "description": "语言代码，例如`zh`、`en`、`ja`。"
+                        "$ref": "#/definitions/languageCode"
                     },
                     "name": {
                         "type": "string",
@@ -44,11 +53,20 @@
         },
         "defaultLanguage": {
             "description": "应用程序的默认语言，若`languages`未指定，则默认为`default`，否则默认为`languages`中的第一个。若指定了`defaultLanguage`，则必须在`languages`中存在。",
-            "type": "string"
+            "$ref": "#/definitions/languageCode"
         },
-        "author": {
-            "type": "string",
-            "description": "应用程序的作者"
+        "generators": {
+            "type": "array",
+            "items": {
+                "oneOf": [
+                    {
+                        "$ref": "./generators/zod.schema.json"
+                    },
+                    {
+                        "$ref": "./generators/openapi.schema.json"
+                    }
+                ]
+            }
         }
     },
     "required": [
