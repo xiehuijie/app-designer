@@ -1,0 +1,59 @@
+{
+    "title": "AppMeta",
+    "description": "用于描述应用程序元数据的 JSON Schema",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "应用程序的名称。"
+        },
+        "description": {
+            "type": "string",
+            "description": "应用程序的描述。"
+        },
+        "version": {
+            "type": "string",
+            "description": "应用程序的版本号。例如`1.0.0`。"
+        },
+        "languages": {
+            "type": "array",
+            "description": "应用程序支持的语言列表。",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string",
+                        "description": "语言代码，例如`zh`、`en`、`ja`。"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "语言名称。"
+                    }
+                },
+                "required": [
+                    "code",
+                    "name"
+                ]
+            },
+            "default": [
+                {
+                    "code": "default",
+                    "name": "默认语言"
+                }
+            ]
+        },
+        "defaultLanguage": {
+            "description": "应用程序的默认语言，若`languages`未指定，则默认为`default`，否则默认为`languages`中的第一个。若指定了`defaultLanguage`，则必须在`languages`中存在。",
+            "type": "string"
+        },
+        "author": {
+            "type": "string",
+            "description": "应用程序的作者"
+        }
+    },
+    "required": [
+        "name",
+        "version"
+    ],
+    "additionalProperties": true
+}
