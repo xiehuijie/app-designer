@@ -1,0 +1,6 @@
+packages:
+  - 'packages/*'
+
+category:
+  typescript: "^6.0.0"
+  turbo: "^2.9.6"

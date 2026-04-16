@@ -1,0 +1,15 @@
+{
+  "name": "app-designer",
+  "description": "A visualization design application that structures data, defines business logic, specifies interface definitions, and allows exporting template code.",
+  "version": "0.1.0",
+  "author": "V5xie <v5.xiehuijie@outlook.com>",
+  "type": "module",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {},
+  "devDependencies": {
+    "typescript": "category:*",
+    "turbo": "category:*"
+  }
+}
