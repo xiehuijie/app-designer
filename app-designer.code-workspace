@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+            "name": "Root",
+			"path": "."
+		},
+		{
+			"name": "VS Code Extension",
+			"path": "apps/vscode"
+		},
+		{
+			"name": "Schemas",
+			"path": "schemas"
+		}
+	],
+	"settings": {}
+}
