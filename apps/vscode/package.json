@@ -1,0 +1,46 @@
+{
+  "name": "@app-designer/vscode-extension",
+  "displayName": "App Designer",
+  "description": "App Designer for VSCode.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.116.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "test.helloWorld",
+        "title": "Hello World"
+      }
+    ],
+    "jsonValidation": [
+      {
+        "fileMatch": "appmeta.json",
+        "url": "./schemas/appmeta.schema.json"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.116.0",
+    "@types/mocha": "catalog:",
+    "@types/node": "catalog:",
+    "typescript-eslint": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "@vscode/test-cli": "catalog:",
+    "@vscode/test-electron": "catalog:"
+  }
+}
