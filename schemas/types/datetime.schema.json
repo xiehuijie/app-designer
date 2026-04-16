@@ -1,0 +1,34 @@
+{
+    "$id": "app-designer/types/datetime.schema.json",
+    "title": "DateTimeTypeDefinition",
+    "allOf": [
+        {
+            "$ref": "base.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "datetime",
+                    "description": "类型标识符，固定为`datetime`。"
+                },
+                "offset": {
+                    "type": "boolean",
+                    "description": "允许时区偏移。"
+                },
+                "local": {
+                    "type": "boolean",
+                    "description": "允许为本地时间。"
+                },
+                "precision": {
+                    "type": "number",
+                    "description": "精度。"
+                }
+            },
+            "required": [
+                "offset",
+                "local"
+            ]
+        }
+    ]
+}

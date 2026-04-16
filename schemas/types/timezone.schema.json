@@ -1,0 +1,18 @@
+{
+    "$id": "app-designer/types/timezone.schema.json",
+    "title": "TimezoneTypeDefinition",
+    "allOf": [
+        {
+            "$ref": "base.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "timezone",
+                    "description": "类型标识符，固定为`timezone`。"
+                }
+            }
+        }
+    ]
+}

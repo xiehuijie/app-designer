@@ -1,0 +1,18 @@
+{
+    "$id": "app-designer/types/boolean.schema.json",
+    "title": "BooleanTypeDefinition",
+    "allOf": [
+        {
+            "$ref": "base.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "boolean",
+                    "description": "类型标识符，固定为`boolean`。"
+                }
+            }
+        }
+    ]
+}

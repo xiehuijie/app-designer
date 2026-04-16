@@ -1,0 +1,22 @@
+{
+    "$id": "app-designer/types/binary.schema.json",
+    "title": "BinaryTypeBaseDefinition",
+    "allOf": [
+        {
+            "$ref": "base.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "maxLength": {
+                    "type": "number",
+                    "description": "最大长度（字节）。"
+                },
+                "minLength": {
+                    "type": "number",
+                    "description": "最小长度（字节）。"
+                }
+            }
+        }
+    ]
+}

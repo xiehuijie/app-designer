@@ -1,0 +1,90 @@
+{
+    "$id": "app-designer/types/url.schema.json",
+    "title": "URLTypeDefinition",
+    "definitions": {
+        "matchStringList": {
+            "type": "object",
+            "properties": {
+                "mode": {
+                    "type": "string",
+                    "description": "匹配模式。",
+                    "enum": [
+                        "whitelist",
+                        "blacklist",
+                        "none"
+                    ]
+                },
+                "value": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "mode",
+                "value"
+            ]
+        },
+        "matchNumberList": {
+            "type": "object",
+            "properties": {
+                "mode": {
+                    "type": "string",
+                    "description": "匹配模式。",
+                    "enum": [
+                        "whitelist",
+                        "blacklist",
+                        "none"
+                    ]
+                },
+                "value": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                }
+            },
+            "required": [
+                "mode",
+                "value"
+            ]
+        }
+    },
+    "allOf": [
+        {
+            "$ref": "base.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "url",
+                    "description": "类型标识符，固定为`url`。"
+                },
+                "protocol": {
+                    "$ref": "#/definitions/matchStringList",
+                    "description": "协议。"
+                },
+                "domain": {
+                    "$ref": "#/definitions/matchStringList",
+                    "description": "域名。"
+                },
+                "port": {
+                    "$ref": "#/definitions/matchNumberList",
+                    "description": "端口。"
+                },
+                "path": {
+                    "$ref": "#/definitions/matchStringList",
+                    "description": "路径。"
+                }
+            },
+            "required": [
+                "protocol",
+                "domain",
+                "port",
+                "path"
+            ]
+        }
+    ]
+}

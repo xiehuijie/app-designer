@@ -1,0 +1,18 @@
+{
+    "$id": "app-designer/types/guid.schema.json",
+    "title": "GUIDTypeDefinition",
+    "allOf": [
+        {
+            "$ref": "base.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "guid",
+                    "description": "类型标识符，固定为`guid`。"
+                }
+            }
+        }
+    ]
+}

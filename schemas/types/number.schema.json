@@ -1,0 +1,38 @@
+{
+    "$id": "app-designer/types/number.schema.json",
+    "title": "NumberTypeDefinition",
+    "allOf": [
+        {
+            "$ref": "base.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "number",
+                    "description": "类型标识符，固定为`number`。"
+                },
+                "minimum": {
+                    "type": "number",
+                    "description": "最小值。"
+                },
+                "maximum": {
+                    "type": "number",
+                    "description": "最大值。"
+                },
+                "exclusiveMinimum": {
+                    "type": "boolean",
+                    "description": "是否包含最小值。"
+                },
+                "exclusiveMaximum": {
+                    "type": "boolean",
+                    "description": "是否包含最大值。"
+                },
+                "multipleOf": {
+                    "type": "number",
+                    "description": "步长。"
+                }
+            }
+        }
+    ]
+}

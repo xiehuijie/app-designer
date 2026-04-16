@@ -1,0 +1,18 @@
+{
+    "$id": "app-designer/types/any.schema.json",
+    "title": "AnyTypeDefinition",
+    "allOf": [
+        {
+            "$ref": "base.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "any",
+                    "description": "类型标识符，固定为`any`。"
+                }
+            }
+        }
+    ]
+}

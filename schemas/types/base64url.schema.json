@@ -1,0 +1,18 @@
+{
+    "$id": "app-designer/types/base64url.schema.json",
+    "title": "Base64URLTypeDefinition",
+    "allOf": [
+        {
+            "$ref": "binary.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "base64url",
+                    "description": "类型标识符，固定为`base64url`。"
+                }
+            }
+        }
+    ]
+}

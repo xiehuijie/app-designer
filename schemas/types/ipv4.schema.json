@@ -1,0 +1,38 @@
+{
+    "$id": "app-designer/types/ipv4.schema.json",
+    "title": "IPv4TypeDefinition",
+    "allOf": [
+        {
+            "$ref": "base.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "ipv4",
+                    "description": "类型标识符，固定为`ipv4`。"
+                },
+                "mode": {
+                    "type": "string",
+                    "description": "匹配模式。",
+                    "enum": [
+                        "whitelist",
+                        "blacklist",
+                        "none"
+                    ]
+                },
+                "range": {
+                    "type": "array",
+                    "description": "允许/禁止的网段范围。",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "mode",
+                "range"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "$id": "app-designer/types/cuid.schema.json",
+    "title": "CUIDTypeDefinition",
+    "allOf": [
+        {
+            "$ref": "base.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "cuid",
+                    "description": "类型标识符，固定为`cuid`。"
+                }
+            }
+        }
+    ]
+}

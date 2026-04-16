@@ -1,0 +1,18 @@
+{
+    "$id": "app-designer/types/uuid.schema.json",
+    "title": "UUIDTypeDefinition",
+    "allOf": [
+        {
+            "$ref": "base.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "uuid",
+                    "description": "类型标识符，固定为`uuid`。"
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,28 @@
+{
+    "$id": "app-designer/types/anyof.schema.json",
+    "title": "AnyOfTypeDefinition",
+    "allOf": [
+        {
+            "$ref": "base.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "anyOf",
+                    "description": "类型标识符，固定为`anyOf`。"
+                },
+                "types": {
+                    "type": "array",
+                    "description": "任意类型。",
+                    "items": {
+                        "$ref": "main.schema.json"
+                    }
+                }
+            },
+            "required": [
+                "types"
+            ]
+        }
+    ]
+}

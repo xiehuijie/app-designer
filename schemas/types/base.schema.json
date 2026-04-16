@@ -1,0 +1,47 @@
+{
+    "$id": "app-designer/types/base.schema.json",
+    "title": "BaseTypeDefinitions",
+    "definitions": {
+        "Text": {
+            "type": "object",
+            "title": "多语言文本描述",
+            "additionalProperties": {
+                "type": "string"
+            }
+        }
+    },
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string",
+            "title": "类型唯一标识符",
+            "description": "类型的唯一标识符，在应用程序中必须唯一。"
+        },
+        "title": {
+            "$ref": "#/definitions/Text"
+        },
+        "description": {
+            "$ref": "#/definitions/Text"
+        },
+        "icon": {
+            "type": "string"
+        },
+        "sort": {
+            "type": "number"
+        },
+        "type": {
+            "type": "string"
+        },
+        "examples": {
+            "type": "array"
+        }
+    },
+    "required": [
+        "id",
+        "title",
+        "icon",
+        "sort",
+        "type",
+        "examples"
+    ]
+}

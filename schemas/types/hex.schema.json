@@ -1,0 +1,18 @@
+{
+    "$id": "app-designer/types/hex.schema.json",
+    "title": "HexTypeDefinition",
+    "allOf": [
+        {
+            "$ref": "binary.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "hex",
+                    "description": "类型标识符，固定为`hex`。"
+                }
+            }
+        }
+    ]
+}

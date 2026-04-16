@@ -1,0 +1,38 @@
+{
+    "$id": "app-designer/types/hash.schema.json",
+    "title": "HashTypeDefinition",
+    "allOf": [
+        {
+            "$ref": "base.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "hash",
+                    "description": "类型标识符，固定为`hash`。"
+                },
+                "algorithm": {
+                    "type": "string",
+                    "description": "哈希算法。",
+                    "enum": [
+                        "md5",
+                        "sha1",
+                        "sha128",
+                        "sha224",
+                        "sha256",
+                        "sha384",
+                        "sha512",
+                        "sha3-224",
+                        "sha3-256",
+                        "sha3-384",
+                        "sha3-512"
+                    ]
+                }
+            },
+            "required": [
+                "algorithm"
+            ]
+        }
+    ]
+}

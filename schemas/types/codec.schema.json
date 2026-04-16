@@ -1,0 +1,40 @@
+{
+    "$id": "app-designer/types/codec.schema.json",
+    "title": "CodecTypeDefinition",
+    "allOf": [
+        {
+            "$ref": "base.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "codec",
+                    "description": "类型标识符，固定为`codec`。"
+                },
+                "input": {
+                    "$ref": "main.schema.json",
+                    "description": "输入类型。"
+                },
+                "output": {
+                    "$ref": "main.schema.json",
+                    "description": "输出类型。"
+                },
+                "forward": {
+                    "type": "string",
+                    "description": "正向（输入）解码函数（parse/decode）。"
+                },
+                "backward": {
+                    "type": "string",
+                    "description": "反向（输出）编码函数（encode）。"
+                }
+            },
+            "required": [
+                "input",
+                "output",
+                "forward",
+                "backward"
+            ]
+        }
+    ]
+}

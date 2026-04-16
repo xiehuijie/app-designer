@@ -1,0 +1,28 @@
+{
+    "$id": "app-designer/types/allof.schema.json",
+    "title": "AllOfTypeDefinition",
+    "allOf": [
+        {
+            "$ref": "base.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "allOf",
+                    "description": "类型标识符，固定为`allOf`。"
+                },
+                "types": {
+                    "type": "array",
+                    "description": "所有类型。",
+                    "items": {
+                        "$ref": "main.schema.json"
+                    }
+                }
+            },
+            "required": [
+                "types"
+            ]
+        }
+    ]
+}

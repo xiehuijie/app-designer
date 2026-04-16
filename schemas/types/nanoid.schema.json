@@ -1,0 +1,26 @@
+{
+    "$id": "app-designer/types/nanoid.schema.json",
+    "title": "NanoIDTypeDefinition",
+    "allOf": [
+        {
+            "$ref": "base.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "nanoid",
+                    "description": "类型标识符，固定为`nanoid`。"
+                },
+                "length": {
+                    "type": "number",
+                    "description": "长度。"
+                },
+                "alphabet": {
+                    "type": "string",
+                    "description": "字母表。"
+                }
+            }
+        }
+    ]
+}

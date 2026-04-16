@@ -1,0 +1,18 @@
+{
+    "$id": "app-designer/types/duration.schema.json",
+    "title": "DurationTypeDefinition",
+    "allOf": [
+        {
+            "$ref": "base.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "duration",
+                    "description": "类型标识符，固定为`duration`。"
+                }
+            }
+        }
+    ]
+}

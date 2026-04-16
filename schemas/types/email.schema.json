@@ -1,0 +1,38 @@
+{
+    "$id": "app-designer/types/email.schema.json",
+    "title": "EmailTypeDefinition",
+    "allOf": [
+        {
+            "$ref": "base.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "email",
+                    "description": "类型标识符，固定为`email`。"
+                },
+                "mode": {
+                    "type": "string",
+                    "description": "匹配模式。",
+                    "enum": [
+                        "whitelist",
+                        "blacklist",
+                        "none"
+                    ]
+                },
+                "domain": {
+                    "type": "array",
+                    "description": "允许/禁止的域。",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "mode",
+                "domain"
+            ]
+        }
+    ]
+}

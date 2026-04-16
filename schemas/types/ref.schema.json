@@ -1,0 +1,25 @@
+{
+    "$id": "app-designer/types/ref.schema.json",
+    "title": "ReferenceTypeDefinition",
+    "allOf": [
+        {
+            "$ref": "base.schema.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "ref",
+                    "description": "类型标识符，固定为`ref`。"
+                },
+                "ref": {
+                    "type": "string",
+                    "description": "引用路径。"
+                }
+            },
+            "required": [
+                "ref"
+            ]
+        }
+    ]
+}
