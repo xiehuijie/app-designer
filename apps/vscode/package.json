@@ -42,13 +42,14 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.116.0",
     "@types/mocha": "catalog:",
     "@types/node": "catalog:",
-    "typescript-eslint": "catalog:",
+    "@types/vscode": "^1.116.0",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.9.0",
     "eslint": "catalog:",
     "typescript": "catalog:",
-    "@vscode/test-cli": "catalog:",
-    "@vscode/test-electron": "catalog:"
+    "typescript-eslint": "catalog:"
   }
 }
