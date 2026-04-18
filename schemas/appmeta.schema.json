@@ -57,6 +57,7 @@
         },
         "generators": {
             "type": "array",
+            "description": "生成器配置",
             "items": {
                 "oneOf": [
                     {

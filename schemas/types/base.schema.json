@@ -5,8 +5,18 @@
         "Text": {
             "type": "object",
             "title": "多语言文本描述",
+            "propertyNames": {
+                "type": "string",
+                "description": "语言代码，例如`en`、`zh`等。",
+                "examples": [
+                    "en",
+                    "zh",
+                    "ja"
+                ]
+            },
             "additionalProperties": {
-                "type": "string"
+                "type": "string",
+                "description": "对应语言的具体文案描述。"
             }
         }
     },
@@ -24,7 +34,8 @@
             "$ref": "#/definitions/Text"
         },
         "icon": {
-            "type": "string"
+            "type": "string",
+            "default": ""
         },
         "sort": {
             "type": "number"
@@ -39,7 +50,6 @@
     "required": [
         "id",
         "title",
-        "icon",
         "sort",
         "type",
         "examples"
