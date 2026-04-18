@@ -1,7 +1,7 @@
 {
 	"folders": [
 		{
-            "name": "Root",
+			"name": "Root",
 			"path": "."
 		},
 		{
@@ -11,7 +11,51 @@
 		{
 			"name": "Schemas",
 			"path": "schemas"
+		},
+		{
+			"name": "Playground",
+			"path": "playground"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"json.schemas": [
+			{
+				"fileMatch": [
+					"appmeta.json"
+				],
+				"url": "./schemas/appmeta.schema.json"
+			},
+			{
+				"fileMatch": [
+					"*.type.json",
+					"*.field.json",
+					"*.struct.json",
+					"*.model.json",
+					"*.view.json",
+				],
+				"url": "./schemas/types/main.schema.json"
+			},
+			{
+				"fileMatch": [
+					"*.codec.json",
+				],
+				"url": "./schemas/types/codec.schema.json"
+			}
+		],
+		"yaml.schemas": {
+			"./schemas/appmeta.schema.json": [
+				"appmeta.yaml"
+			],
+			"./schemas/types/main.schema.json": [
+				"*.type.yaml",
+				"*.field.yaml",
+				"*.struct.yaml",
+				"*.model.yaml",
+				"*.view.yaml",
+			],
+			"./schemas/types/codec.schema.json": [
+				"*.codec.yaml",
+			]
+		}
+	}
 }
