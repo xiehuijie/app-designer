@@ -2,7 +2,7 @@
   "name": "@app-designer/vscode-extension",
   "displayName": "App Designer",
   "description": "App Designer for VSCode.",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.116.0"
   },
