@@ -1,0 +1,21 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
+  "changelog": [
+    "@changesets/cli/changelog",
+    null
+  ],
+  "commit": false,
+  "fixed": [
+    [
+      "@app-designer/vscode-extension",
+      "@app-designer/components",
+      "@app-designer/core",
+      "@app-designer/types"
+    ]
+  ],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": []
+}

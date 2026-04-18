@@ -7,8 +7,14 @@
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
   },
-  "scripts": {},
+  "scripts": {
+    "changeset": "changeset",
+    "changeset:status": "changeset status --verbose",
+    "changeset:version": "changeset version",
+    "changeset:publish": "changeset publish"
+  },
   "devDependencies": {
+    "@changesets/cli": "catalog:",
     "typescript": "catalog:",
     "turbo": "catalog:"
   }
