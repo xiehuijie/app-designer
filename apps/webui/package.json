@@ -1,0 +1,8 @@
+{
+    "name": "@app-designer/webui",
+    "version": "0.1.0",
+    "devDependencies": {
+        "@app-designer/types": "workspace:*",
+        "@app-designer/configs": "workspace:*"
+    }
+}

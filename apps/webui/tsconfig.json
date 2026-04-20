@@ -1,0 +1,8 @@
+{
+    "extends": "@app-designer/configs/tsconfig/base.tsconfig.json",
+    "compilerOptions": {
+        "types": [
+            "@app-designer/types"
+        ]
+    },
+}
