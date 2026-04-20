@@ -10,7 +10,9 @@
       "@app-designer/vscode-extension",
       "@app-designer/components",
       "@app-designer/core",
-      "@app-designer/types"
+      "@app-designer/types",
+      "@app-designer/gen-openapi",
+      "@app-designer/gen-zod"
     ]
   ],
   "linked": [],

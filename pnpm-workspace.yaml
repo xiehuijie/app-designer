@@ -1,6 +1,7 @@
 packages:
   - "packages/*"
   - "apps/*"
+  - "generators/*"
 
 allowBuilds:
   esbuild: true
