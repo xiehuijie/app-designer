@@ -1,6 +1,6 @@
 type Text = Record<string, string>
 
-export interface Base {
+interface Base {
     /** 类型唯一标识符 */
     id: string;
     /** 名称 */
@@ -17,7 +17,7 @@ export interface Base {
     examples: any[];
 }
 
-export interface String extends Base {
+export interface StringType extends Base {
     type: 'string';
     /** 正则表达式 */
     pattern?: string;
@@ -27,7 +27,7 @@ export interface String extends Base {
     maxLength?: number;
 }
 
-export interface Number extends Base {
+export interface NumberType extends Base {
     type: 'number';
     /** 最小值 */
     minimum?: number;
@@ -41,31 +41,31 @@ export interface Number extends Base {
     multipleOf?: number;
 }
 
-export interface Boolean extends Base {
+export interface BooleanType extends Base {
     type: 'boolean';
 }
 
-export interface Literal extends Base {
+export interface LiteralType extends Base {
     type: 'literal';
     /** 字面量值 */
     value: string | number | boolean | null;
 }
 
-export interface Enum extends Base {
+export interface EnumType extends Base {
     type: 'enum';
     /** 枚举值 */
     values: (string | number | boolean | null)[];
 }
 
-export interface Null extends Base {
+export interface NullType extends Base {
     type: 'null';
 }
 
-export interface Any extends Base {
+export interface AnyType extends Base {
     type: 'any';
 }
 
-export interface Array extends Base {
+export interface ArrayType extends Base {
     type: 'array';
     /** 数组元素类型 */
     itemType: Type;
@@ -75,7 +75,7 @@ export interface Array extends Base {
     maxItems?: number;
 }
 
-export interface Object extends Base {
+export interface ObjectType extends Base {
     type: 'object';
     /** 属性 */
     properties: Record<string, Type>;
@@ -85,31 +85,31 @@ export interface Object extends Base {
     additionalProperties?: boolean;
 }
 
-export interface Tuple extends Base {
+export interface TupleType extends Base {
     type: 'tuple';
     /** 元组元素类型 */
     items: Type[];
 }
 
-export interface AnyOf extends Base {
+export interface AnyOfType extends Base {
     type: 'anyOf';
     /** 任意类型 */
     types: Type[];
 }
 
-export interface AllOf extends Base {
+export interface AllOfType extends Base {
     type: 'allOf';
     /** 所有类型 */
     types: Type[];
 }
 
-export interface OneOf extends Base {
+export interface OneOfType extends Base {
     type: 'oneOf';
     /** 任意类型 */
     types: Type[];
 }
 
-export interface Email extends Base {
+export interface EmailType extends Base {
     type: 'email';
     /** 匹配模式 */
     mode: 'whitelist' | 'blacklist' | 'none';
@@ -117,23 +117,23 @@ export interface Email extends Base {
     domain: string[];
 }
 
-export interface UUID extends Base {
+export interface UUIDType extends Base {
     type: 'uuid';
 }
 
-export interface CUID extends Base {
+export interface CUIDType extends Base {
     type: 'cuid';
 }
 
-export interface GUID extends Base {
+export interface GUIDType extends Base {
     type: 'guid';
 }
 
-export interface ULID extends Base {
+export interface ULIDType extends Base {
     type: 'ulid';
 }
 
-export interface NanoID extends Base {
+export interface NanoIDType extends Base {
     type: 'nanoid';
     /** 长度 */
     length?: number;
@@ -141,7 +141,7 @@ export interface NanoID extends Base {
     alphabet?: string;
 }
 
-export interface Color extends Base {
+export interface ColorType extends Base {
     type: 'color';
     /** 颜色匹配模式 */
     mode: 'whitelist' | 'blacklist' | 'none';
@@ -149,11 +149,11 @@ export interface Color extends Base {
     format?: 'hex' | 'hexa' | 'rgb' | 'rgba' | 'hsl' | 'hsla'[];
 }
 
-export interface Timezone extends Base {
+export interface TimezoneType extends Base {
     type: 'timezone';
 }
 
-export interface URL extends Base {
+export interface URLType extends Base {
     type: 'url';
     /** 协议 */
     protocol: {
@@ -192,33 +192,33 @@ interface Binary extends Base {
     minLength?: number;
 }
 
-export interface Base32 extends Binary {
+export interface Base32Type extends Binary {
     type: 'base32';
 }
 
-export interface Base36 extends Binary {
+export interface Base36Type extends Binary {
     type: 'base36';
 }
 
-export interface Base64 extends Binary {
+export interface Base64Type extends Binary {
     type: 'base64';
 }
 
-export interface Base64URL extends Binary {
+export interface Base64URLType extends Binary {
     type: 'base64url';
 }
 
-export interface Hex extends Binary {
+export interface HexType extends Binary {
     type: 'hex';
 }
 
-export interface Hash extends Base {
+export interface HashType extends Base {
     type: 'hash';
     /** 哈希算法 */
     algorithm: 'md5' | 'sha1' | 'sha128' | 'sha224' | 'sha256' | 'sha384' | 'sha512' | 'sha3-224' | 'sha3-256' | 'sha3-384' | 'sha3-512';
 }
 
-export interface IPv4 extends Base {
+export interface IPv4Type extends Base {
     type: 'ipv4';
     /** 匹配模式 */
     mode: 'whitelist' | 'blacklist' | 'none';
@@ -226,7 +226,7 @@ export interface IPv4 extends Base {
     range: string[];
 }
 
-export interface IPv6 extends Base {
+export interface IPv6Type extends Base {
     type: 'ipv6';
     /** 匹配模式 */
     mode: 'whitelist' | 'blacklist' | 'none';
@@ -234,15 +234,15 @@ export interface IPv6 extends Base {
     range: string[];
 }
 
-export interface CIDRv4 extends Base {
+export interface CIDRv4Type extends Base {
     type: 'cidrv4';
 }
 
-export interface CIDRv6 extends Base {
+export interface CIDRv6Type extends Base {
     type: 'cidrv6';
 }
 
-export interface MAC extends Base {
+export interface MACType extends Base {
     type: 'mac';
     /** 匹配模式 */
     mode: 'whitelist' | 'blacklist' | 'none';
@@ -250,17 +250,17 @@ export interface MAC extends Base {
     range: string[];
 }
 
-export interface Date extends Base {
+export interface DateType extends Base {
     type: 'date';
 }
 
-export interface Time extends Base {
+export interface TimeType extends Base {
     type: 'time';
     /** 精度 */
     precision?: number;
 }
 
-export interface DateTime extends Base {
+export interface DateTimeType extends Base {
     type: 'datetime';
     /** 允许时区偏移 */
     offset: boolean;
@@ -270,17 +270,17 @@ export interface DateTime extends Base {
     precision?: number;
 }
 
-export interface Duration extends Base {
+export interface DurationType extends Base {
     type: 'duration';
 }
 
-export interface Reference extends Base {
+export interface ReferenceType extends Base {
     type: 'ref';
     /** 引用路径 */
     ref: string;
 }
 
-export interface Codec extends Base {
+export interface CodecType extends Base {
     type: 'codec';
     /** 输入类型 */
     input: Type;
@@ -292,13 +292,13 @@ export interface Codec extends Base {
     backward: string;
 }
 
-type BasicType = String | Number | Boolean | Literal | Enum | Null | Any;
-type CompositeType = Array | Object | Tuple | AnyOf | AllOf | OneOf;
-type FormattedType = Email | UUID | CUID | GUID | ULID | NanoID | URL;
-type BinaryBasedType = Base32 | Base36 | Base64 | Base64URL | Hex | Hash;
-type NetworkType = IPv4 | IPv6 | CIDRv4 | CIDRv6 | MAC;
-type TimeBasedType = Date | Time | DateTime | Duration | Timezone;
-type ReferenceType = Reference;
-type CodecType = Codec;
+type BasicType = StringType | NumberType | BooleanType | LiteralType | EnumType | NullType | AnyType;
+type CompositeType = ArrayType | ObjectType | TupleType | AnyOfType | AllOfType | OneOfType;
+type FormattedType = EmailType | UUIDType | CUIDType | GUIDType | ULIDType | NanoIDType | URLType;
+type BinaryBasedType = Base32Type | Base36Type | Base64Type | Base64URLType | HexType | HashType;
+type NetworkType = IPv4Type | IPv6Type | CIDRv4Type | CIDRv6Type | MACType;
+type TimeBasedType = DateType | TimeType | DateTimeType | DurationType | TimezoneType;
 
-export type Type = BasicType | CompositeType | FormattedType | BinaryBasedType | NetworkType | TimeBasedType | ReferenceType | CodecType;
+type Type = BasicType | CompositeType | FormattedType | BinaryBasedType | NetworkType | TimeBasedType | ReferenceType | CodecType;
+
+export type BuiltinType = Type;

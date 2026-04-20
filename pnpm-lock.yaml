@@ -72,11 +72,30 @@ importers:
         specifier: 'catalog:'
         version: 8.58.2(eslint@9.39.4)(typescript@6.0.3)
 
+  apps/webui:
+    devDependencies:
+      '@app-designer/configs':
+        specifier: workspace:*
+        version: link:../../configs
+      '@app-designer/types':
+        specifier: workspace:*
+        version: link:../../packages/types
+
+  configs: {}
+
+  generators/openapi: {}
+
+  generators/zod: {}
+
   packages/components: {}
 
   packages/core: {}
 
-  packages/types: {}
+  packages/types:
+    devDependencies:
+      '@app-designer/configs':
+        specifier: workspace:*
+        version: link:../../configs
 
 packages:
 

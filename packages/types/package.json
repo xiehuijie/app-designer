@@ -2,12 +2,15 @@
   "name": "@app-designer/types",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "types": "dist/index.d.ts",
   "keywords": [],
   "author": "",
+  "scripts": {
+    "postinstall": "tsc"
+  },
   "license": "ISC",
-  "packageManager": "pnpm@10.32.1"
+  "packageManager": "pnpm@10.32.1",
+  "devDependencies": {
+    "@app-designer/configs": "workspace:*"
+  }
 }

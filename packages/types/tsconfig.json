@@ -1,0 +1,12 @@
+{
+    "extends": "@app-designer/configs/tsconfig/base.tsconfig.json",
+    "compilerOptions": {
+        "noEmit": false,
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "outDir": "dist",
+    },
+    "include": [
+        "*.ts"
+    ]
+}
