@@ -5,12 +5,16 @@
 			"path": "."
 		},
 		{
-			"name": "VS Code Extension",
-			"path": "apps/vscode"
+			"name": "Configs",
+			"path": "configs"
 		},
 		{
 			"name": "Schemas",
 			"path": "schemas"
+		},
+		{
+			"name": "VS Code Extension",
+			"path": "apps/vscode"
 		},
 		{
 			"name": "Playground",
@@ -56,6 +60,20 @@
 			"./schemas/types/codec.schema.json": [
 				"*.codec.yaml",
 			]
-		}
+		},
+		"material-icon-theme.folders.associations": {
+			"apps/webui": "public",
+			"generators/openapi": "meta",
+			"generators/zod": "zeabur"
+		},
+		"cSpell.words": [
+			"webui"
+		]
+	},
+	"extensions": {
+		"recommendations": [
+			"PKief.material-icon-theme",
+			"streetsidesoftware.code-spell-checker"
+		]
 	}
 }
