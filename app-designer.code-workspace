@@ -9,6 +9,26 @@
 			"path": "configs"
 		},
 		{
+			"name": "Core",
+			"path": "packages/core"
+		},
+		{
+			"name": "Components",
+			"path": "packages/components"
+		},
+		{
+			"name": "Types",
+			"path": "packages/types"
+		},
+		{
+			"name": "Web UI",
+			"path": "apps/webui"
+		},
+		{
+			"name": "CLI",
+			"path": "apps/cli"
+		},
+		{
 			"name": "Schemas",
 			"path": "schemas"
 		},
@@ -22,6 +42,12 @@
 		}
 	],
 	"settings": {
+		"cSpell.words": [
+			"webui",
+			"appmeta",
+			"oxfmt",
+			"oxlint"
+		],
 		"json.schemas": [
 			{
 				"fileMatch": [
@@ -46,9 +72,17 @@
 				"url": "./schemas/types/codec.schema.json"
 			}
 		],
+		"material-icon-theme.folders.associations": {
+			"apps/webui": "public",
+			"generators/openapi": "meta",
+			"generators/zod": "zeabur"
+		},
 		"yaml.schemas": {
 			"./schemas/appmeta.schema.json": [
 				"appmeta.yaml"
+			],
+			"./schemas/types/codec.schema.json": [
+				"*.codec.yaml",
 			],
 			"./schemas/types/main.schema.json": [
 				"*.type.yaml",
@@ -56,24 +90,30 @@
 				"*.struct.yaml",
 				"*.model.yaml",
 				"*.view.yaml",
-			],
-			"./schemas/types/codec.schema.json": [
-				"*.codec.yaml",
 			]
 		},
-		"material-icon-theme.folders.associations": {
-			"apps/webui": "public",
-			"generators/openapi": "meta",
-			"generators/zod": "zeabur"
+		"oxc.fmt.configPath": "configs/oxfmt/.oxfmtrc.json",
+		"oxc.enable.oxfmt": true,
+		"editor.codeActionsOnSave": {
+			"source.fixAll.oxc": "always"
 		},
-		"cSpell.words": [
-			"webui"
-		]
+		"[javascript]": {
+			"editor.defaultFormatter": "oxc.oxc-vscode",
+			"editor.formatOnSave": true
+		},
+		"[typescript]": {
+			"editor.defaultFormatter": "oxc.oxc-vscode",
+			"editor.formatOnSave": true
+		},
+		"editor.indentSize": "tabSize",
+		"editor.tabSize": 2,
+		"editor.insertSpaces": false
 	},
 	"extensions": {
 		"recommendations": [
 			"PKief.material-icon-theme",
-			"streetsidesoftware.code-spell-checker"
+			"streetsidesoftware.code-spell-checker",
+			"oxc.oxc-vscode"
 		]
 	}
 }
