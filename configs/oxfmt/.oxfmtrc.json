@@ -1,0 +1,9 @@
+{
+  "printWidth": 160,
+  "endOfLine": "lf",
+  "tabWidth": 2,
+  "insertFinalNewline": true,
+  "semi": true,
+  "quoteProps": "as-needed",
+  "ignorePatterns": [],
+}
