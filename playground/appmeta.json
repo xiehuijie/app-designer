@@ -1,4 +1,19 @@
 {
     "name": "Demo App",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "languages": [
+        {
+            "code": "zh",
+            "name": "简体中文"
+        },
+        {
+            "code": "en",
+            "name": "English"
+        },
+        {
+            "code": "ja",
+            "name": "日本語"
+        }
+    ],
+    "defaultLanguage": "zh"
 }
