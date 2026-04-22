@@ -46,7 +46,8 @@
 			"webui",
 			"appmeta",
 			"oxfmt",
-			"oxlint"
+			"oxlint",
+			"esbuild"
 		],
 		"json.schemas": [
 			{
