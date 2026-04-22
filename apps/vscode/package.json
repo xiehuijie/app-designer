@@ -20,10 +20,46 @@
   "contributes": {
     "commands": [
       {
-        "command": "test.helloWorld",
-        "title": "Hello World"
+        "command": "appDesigner.selectProject",
+        "title": "应用设计项目管理: 选择项目"
+      },
+      {
+        "command": "appDesigner.refreshProjects",
+        "title": "应用设计项目管理: 刷新项目列表"
       }
     ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "appDesignerSidebar",
+          "title": "应用设计项目管理",
+          "icon": "icon/view.svg"
+        }
+      ]
+    },
+    "views": {
+      "appDesignerSidebar": [
+        {
+          "id": "appDesignerProjectTree",
+          "name": "项目文件树",
+          "icon": "icon/view.svg"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "appDesigner.selectProject",
+          "when": "view == appDesignerProjectTree",
+          "group": "navigation"
+        },
+        {
+          "command": "appDesigner.refreshProjects",
+          "when": "view == appDesignerProjectTree",
+          "group": "navigation@1"
+        }
+      ]
+    },
     "jsonValidation": [
       {
         "fileMatch": "appmeta.json",
