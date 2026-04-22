@@ -66,5 +66,8 @@ export type AppMetaInput = z.input<typeof AppMetaSchema>;
 export type AppMetaOutput = z.output<typeof AppMetaSchema>;
 
 export interface IProject {
+  /** 应用元数据 */
   readonly appMeta: AppMetaOutput;
+
+  registerType(typeDefinition: BuiltinType): void;
 }
