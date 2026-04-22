@@ -10,6 +10,7 @@
   "categories": [
     "Other"
   ],
+  "icon": "icon/icon256.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/xiehuijie/app-designer"
