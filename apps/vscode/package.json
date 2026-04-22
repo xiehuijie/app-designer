@@ -1,15 +1,19 @@
 {
-  "name": "@app-designer/vscode-extension",
+  "name": "app-designer",
   "displayName": "App Designer",
   "description": "App Designer for VSCode.",
   "version": "0.1.0",
+  "publisher": "geek213",
   "engines": {
     "vscode": "^1.116.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xiehuijie/app-designer"
+  },
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
@@ -39,7 +43,8 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "package": "vsce package --follow-symlinks"
   },
   "devDependencies": {
     "@types/mocha": "catalog:",
