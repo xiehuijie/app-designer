@@ -9,8 +9,14 @@ allowBuilds:
 
 catalog:
   "@changesets/cli": "^2.29.7"
+  "@types/inquirer": "^9.0.7"
   "@types/mocha": "^10.0.10"
   "@types/node": "22.x"
+  "chalk": "^5.3.0"
+  "commander": "^12.1.0"
+  "colorette": "^2.0.20"
+  "inquirer": "^9.2.12"
+  "ora": "^8.0.1"
   eslint: "^9.39.3"
   oxfmt: ^0.46.0
   oxlint: ^1.61.0
