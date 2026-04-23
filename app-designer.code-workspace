@@ -47,7 +47,8 @@
 			"appmeta",
 			"oxfmt",
 			"oxlint",
-			"esbuild"
+			"esbuild",
+			"iconify"
 		],
 		"json.schemas": [
 			{
