@@ -1,10 +1,56 @@
 import { z } from "zod";
+import {
+  I18nTextSchema,
+  MatchModeSchema,
+  LiteralValueSchema,
+  MatchStringListSchema,
+  MatchNumberListSchema,
+} from "./common";
 
-export const TextSchema = z.record(z.string(), z.string());
-export const MatchModeSchema = z.enum(["whitelist", "blacklist", "none"]);
-export const LiteralValueSchema = z.union([z.string(), z.number(), z.boolean(), z.null()]);
+const BuiltinTypeList = [
+  "string",
+  "number",
+  "boolean",
+  "literal",
+  "enum",
+  "null",
+  "any",
+  "array",
+  "object",
+  "tuple",
+  "anyOf",
+  "allOf",
+  "oneOf",
+  "email",
+  "uuid",
+  "cuid",
+  "guid",
+  "ulid",
+  "nanoid",
+  "color",
+  "timezone",
+  "url",
+  "base32",
+  "base36",
+  "base64",
+  "base64url",
+  "hex",
+  "hash",
+  "ipv4",
+  "ipv6",
+  "cidrv4",
+  "cidrv6",
+  "mac",
+  "date",
+  "time",
+  "datetime",
+  "duration",
+  "ref",
+  "codec",
+] as const;
+type BuiltinTypeKey = (typeof BuiltinTypeList)[number];
 
-export const BuiltinTypeIconDefaults = {
+export const DefaultIconMap = {
   string: "oui:string",
   number: "oui:number",
   boolean: "oui:boolean",
@@ -44,388 +90,219 @@ export const BuiltinTypeIconDefaults = {
   duration: "mdi:timer-sand",
   ref: "mdi:link-box-variant",
   codec: "mdi:swap-horizontal-bold",
-} as const;
+} satisfies Record<BuiltinTypeKey, string>;
 
-export const BaseSchema = z.object({
-  /** 类型唯一标识符 */
-  id: z.string(),
-  /** 名称 */
-  title: TextSchema,
-  /** 描述 */
-  description: TextSchema.optional(),
-  /** 图标 */
-  icon: z.string().default("mdi:shape-outline"),
-  /** 排序值 */
-  sort: z.number().default(0),
-  /** 类型 */
-  type: z.string(),
-  /** 示例 */
-  examples: z.array(z.unknown()).default([]),
-});
+const BaseSchemaMap = (() => {
+  const base = z.object({
+    /** 类型唯一标识符 */
+    id: z.string(),
+    /** 名称 */
+    title: I18nTextSchema,
+    /** 描述 */
+    description: I18nTextSchema.optional(),
+    /** 图标 */
+    icon: z.string().default("mdi:shape-outline"),
+    /** 排序值 */
+    sort: z.number().default(0),
+    /** 类型 */
+    type: z.string(),
+    /** 示例 */
+    examples: z.array(z.unknown()).default([]),
+  });
+  const binary = base.extend({
+    /** 最大长度（字节） */
+    maxLength: z.number().optional(),
+    /** 最小长度（字节） */
+    minLength: z.number().optional(),
+  });
+  return { base, binary };
+})();
 
-const createTypeBaseSchema = <T extends keyof typeof BuiltinTypeIconDefaults>(type: T) =>
-  BaseSchema.extend({
+const createSchema = <K extends BuiltinTypeKey, T extends keyof typeof BaseSchemaMap>(
+  type: K,
+  base: T = "base" as T,
+) =>
+  BaseSchemaMap[base].extend({
+    /** 类型 */
     type: z.literal(type),
-    icon: z.string().default(BuiltinTypeIconDefaults[type]),
+    /** 图标 */
+    icon: z.string().default(DefaultIconMap[type]),
   });
 
-export const StringTypeSchema = createTypeBaseSchema("string").extend({
-  /** 正则表达式 */
-  pattern: z.string().optional(),
-  /** 最小长度 */
-  minLength: z.number().optional(),
-  /** 最大长度 */
-  maxLength: z.number().optional(),
-});
+export const SchemaMap = {
+  string: createSchema("string").extend({
+    /** 正则表达式 */
+    pattern: z.string().optional(),
+    /** 最小长度 */
+    minLength: z.number().optional(),
+    /** 最大长度 */
+    maxLength: z.number().optional(),
+  }),
+  number: createSchema("number").extend({
+    /** 最小值 */
+    minimum: z.number().optional(),
+    /** 最大值 */
+    maximum: z.number().optional(),
+    /** 是否包含最小值 */
+    exclusiveMinimum: z.boolean().optional(),
+    /** 是否包含最大值 */
+    exclusiveMaximum: z.boolean().optional(),
+    /** 步长 */
+    multipleOf: z.number().optional(),
+  }),
+  boolean: createSchema("boolean"),
+  literal: createSchema("literal").extend({
+    /** 字面量值 */
+    value: LiteralValueSchema,
+  }),
+  enum: createSchema("enum").extend({
+    /** 枚举值 */
+    values: z.array(LiteralValueSchema),
+  }),
+  null: createSchema("null"),
+  any: createSchema("any"),
+  array: createSchema("array").extend({
+    /** 数组元素类型 */
+    itemType: z.lazy(() => TypeSchema),
+    /** 最小长度 */
+    minItems: z.number().optional(),
+    /** 最大长度 */
+    maxItems: z.number().optional(),
+  }),
+  object: createSchema("object").extend({
+    /** 属性 */
+    properties: z.record(
+      z.string(),
+      z.lazy(() => TypeSchema),
+    ),
+    /** 必填属性 */
+    required: z.array(z.string()),
+    /** 允许额外属性 */
+    additionalProperties: z.boolean().optional(),
+  }),
+  tuple: createSchema("tuple").extend({
+    /** 元组元素类型 */
+    items: z.array(z.lazy(() => TypeSchema)),
+  }),
+  anyOf: createSchema("anyOf").extend({
+    /** 任意类型 */
+    types: z.array(z.lazy(() => TypeSchema)),
+  }),
+  allOf: createSchema("allOf").extend({
+    /** 所有类型 */
+    types: z.array(z.lazy(() => TypeSchema)),
+  }),
+  oneOf: createSchema("oneOf").extend({
+    /** 任意类型 */
+    types: z.array(z.lazy(() => TypeSchema)),
+  }),
+  email: createSchema("email").extend({
+    /** 匹配模式 */
+    mode: MatchModeSchema,
+    /** 允许/禁止的域 */
+    domain: z.array(z.string()),
+  }),
+  uuid: createSchema("uuid"),
+  cuid: createSchema("cuid"),
+  guid: createSchema("guid"),
+  ulid: createSchema("ulid"),
+  nanoid: createSchema("nanoid").extend({
+    /** 长度 */
+    length: z.number().optional(),
+    /** 字母表 */
+    alphabet: z.string().optional(),
+  }),
+  color: createSchema("color").extend({
+    /** 颜色匹配模式 */
+    mode: MatchModeSchema,
+    /** 允许/禁止的颜色格式 */
+    format: z.array(z.enum(["hex", "hexa", "rgb", "rgba", "hsl", "hsla"])).optional(),
+  }),
+  timezone: createSchema("timezone"),
+  base32: createSchema("base32", "binary"),
+  base36: createSchema("base36", "binary"),
+  base64: createSchema("base64", "binary"),
+  base64url: createSchema("base64url", "binary"),
+  hex: createSchema("hex", "binary"),
+  url: createSchema("url").extend({
+    /** 协议 */
+    protocol: MatchStringListSchema,
+    /** 域名 */
+    domain: MatchStringListSchema,
+    /** 端口 */
+    port: MatchNumberListSchema,
+    /** 路径 */
+    path: MatchStringListSchema,
+  }),
+  hash: createSchema("hash").extend({
+    /** 哈希算法 */
+    algorithm: z.enum([
+      "md5",
+      "sha1",
+      "sha128",
+      "sha224",
+      "sha256",
+      "sha384",
+      "sha512",
+      "sha3-224",
+      "sha3-256",
+      "sha3-384",
+      "sha3-512",
+    ]),
+  }),
+  ipv4: createSchema("ipv4").extend({
+    /** 匹配模式 */
+    mode: MatchModeSchema,
+    /** 允许/禁止的网段范围 */
+    range: z.array(z.string()),
+  }),
+  ipv6: createSchema("ipv6").extend({
+    /** 匹配模式 */
+    mode: MatchModeSchema,
+    /** 允许/禁止的网段范围 */
+    range: z.array(z.string()),
+  }),
+  cidrv4: createSchema("cidrv4"),
+  cidrv6: createSchema("cidrv6"),
+  mac: createSchema("mac").extend({
+    /** 匹配模式 */
+    mode: MatchModeSchema,
+    /** 允许/禁止的 MAC 地址范围 */
+    range: z.array(z.string()),
+  }),
+  date: createSchema("date"),
+  time: createSchema("time").extend({
+    /** 精度 */
+    precision: z.number().optional(),
+  }),
+  datetime: createSchema("datetime").extend({
+    /** 允许时区偏移 */
+    offset: z.boolean(),
+    /** 允许为本地时间 */
+    local: z.boolean(),
+    /** 精度 */
+    precision: z.number().optional(),
+  }),
+  duration: createSchema("duration"),
+  ref: createSchema("ref").extend({
+    /** 引用路径 */
+    ref: z.string(),
+  }),
+  codec: createSchema("codec").extend({
+    /** 输入类型 */
+    input: z.lazy(() => TypeSchema),
+    /** 输出类型 */
+    output: z.lazy(() => TypeSchema),
+    /** 正向（输入）解码函数 (parse/decode) */
+    forward: z.string(),
+    /** 反向（输出）编码函数 (encode) */
+    backward: z.string(),
+  }),
+} satisfies Record<BuiltinTypeKey, z.ZodObject>;
 
-export const NumberTypeSchema = createTypeBaseSchema("number").extend({
-  /** 最小值 */
-  minimum: z.number().optional(),
-  /** 最大值 */
-  maximum: z.number().optional(),
-  /** 是否包含最小值 */
-  exclusiveMinimum: z.boolean().optional(),
-  /** 是否包含最大值 */
-  exclusiveMaximum: z.boolean().optional(),
-  /** 步长 */
-  multipleOf: z.number().optional(),
-});
-
-export const BooleanTypeSchema = createTypeBaseSchema("boolean");
-
-export const LiteralTypeSchema = createTypeBaseSchema("literal").extend({
-  /** 字面量值 */
-  value: LiteralValueSchema,
-});
-
-export const EnumTypeSchema = createTypeBaseSchema("enum").extend({
-  /** 枚举值 */
-  values: z.array(LiteralValueSchema),
-});
-
-export const NullTypeSchema = createTypeBaseSchema("null");
-
-export const AnyTypeSchema = createTypeBaseSchema("any");
-
-export const ArrayTypeSchema = createTypeBaseSchema("array").extend({
-  /** 数组元素类型 */
-  itemType: z.lazy(() => BuiltinTypeSchema),
-  /** 最小长度 */
-  minItems: z.number().optional(),
-  /** 最大长度 */
-  maxItems: z.number().optional(),
-});
-
-export const ObjectTypeSchema = createTypeBaseSchema("object").extend({
-  /** 属性 */
-  properties: z.record(z.string(), z.lazy(() => BuiltinTypeSchema)),
-  /** 必填属性 */
-  required: z.array(z.string()),
-  /** 允许额外属性 */
-  additionalProperties: z.boolean().optional(),
-});
-
-export const TupleTypeSchema = createTypeBaseSchema("tuple").extend({
-  /** 元组元素类型 */
-  items: z.array(z.lazy(() => BuiltinTypeSchema)),
-});
-
-export const AnyOfTypeSchema = createTypeBaseSchema("anyOf").extend({
-  /** 任意类型 */
-  types: z.array(z.lazy(() => BuiltinTypeSchema)),
-});
-
-export const AllOfTypeSchema = createTypeBaseSchema("allOf").extend({
-  /** 所有类型 */
-  types: z.array(z.lazy(() => BuiltinTypeSchema)),
-});
-
-export const OneOfTypeSchema = createTypeBaseSchema("oneOf").extend({
-  /** 任意类型 */
-  types: z.array(z.lazy(() => BuiltinTypeSchema)),
-});
-
-export const EmailTypeSchema = createTypeBaseSchema("email").extend({
-  /** 匹配模式 */
-  mode: MatchModeSchema,
-  /** 允许/禁止的域 */
-  domain: z.array(z.string()),
-});
-
-export const UUIDTypeSchema = createTypeBaseSchema("uuid");
-
-export const CUIDTypeSchema = createTypeBaseSchema("cuid");
-
-export const GUIDTypeSchema = createTypeBaseSchema("guid");
-
-export const ULIDTypeSchema = createTypeBaseSchema("ulid");
-
-export const NanoIDTypeSchema = createTypeBaseSchema("nanoid").extend({
-  /** 长度 */
-  length: z.number().optional(),
-  /** 字母表 */
-  alphabet: z.string().optional(),
-});
-
-export const ColorTypeSchema = createTypeBaseSchema("color").extend({
-  /** 颜色匹配模式 */
-  mode: MatchModeSchema,
-  /** 允许/禁止的颜色格式 */
-  format: z.array(z.enum(["hex", "hexa", "rgb", "rgba", "hsl", "hsla"])).optional(),
-});
-
-export const TimezoneTypeSchema = createTypeBaseSchema("timezone");
-
-const MatchStringListSchema = z.object({
-  /** 匹配模式 */
-  mode: MatchModeSchema,
-  /** 允许/禁止的范围 */
-  value: z.array(z.string()),
-});
-
-const MatchNumberListSchema = z.object({
-  /** 匹配模式 */
-  mode: MatchModeSchema,
-  /** 允许/禁止的范围 */
-  value: z.array(z.number()),
-});
-
-export const URLTypeSchema = createTypeBaseSchema("url").extend({
-  /** 协议 */
-  protocol: MatchStringListSchema,
-  /** 域名 */
-  domain: MatchStringListSchema,
-  /** 端口 */
-  port: MatchNumberListSchema,
-  /** 路径 */
-  path: MatchStringListSchema,
-});
-
-const BinarySchema = BaseSchema.extend({
-  /** 最大长度（字节） */
-  maxLength: z.number().optional(),
-  /** 最小长度（字节） */
-  minLength: z.number().optional(),
-});
-
-export const Base32TypeSchema = BinarySchema.extend({
-  type: z.literal("base32"),
-  icon: z.string().default(BuiltinTypeIconDefaults.base32),
-});
-
-export const Base36TypeSchema = BinarySchema.extend({
-  type: z.literal("base36"),
-  icon: z.string().default(BuiltinTypeIconDefaults.base36),
-});
-
-export const Base64TypeSchema = BinarySchema.extend({
-  type: z.literal("base64"),
-  icon: z.string().default(BuiltinTypeIconDefaults.base64),
-});
-
-export const Base64URLTypeSchema = BinarySchema.extend({
-  type: z.literal("base64url"),
-  icon: z.string().default(BuiltinTypeIconDefaults.base64url),
-});
-
-export const HexTypeSchema = BinarySchema.extend({
-  type: z.literal("hex"),
-  icon: z.string().default(BuiltinTypeIconDefaults.hex),
-});
-
-export const HashTypeSchema = createTypeBaseSchema("hash").extend({
-  /** 哈希算法 */
-  algorithm: z.enum([
-    "md5",
-    "sha1",
-    "sha128",
-    "sha224",
-    "sha256",
-    "sha384",
-    "sha512",
-    "sha3-224",
-    "sha3-256",
-    "sha3-384",
-    "sha3-512",
-  ]),
-});
-
-export const IPv4TypeSchema = createTypeBaseSchema("ipv4").extend({
-  /** 匹配模式 */
-  mode: MatchModeSchema,
-  /** 允许/禁止的网段范围 */
-  range: z.array(z.string()),
-});
-
-export const IPv6TypeSchema = createTypeBaseSchema("ipv6").extend({
-  /** 匹配模式 */
-  mode: MatchModeSchema,
-  /** 允许/禁止的网段范围 */
-  range: z.array(z.string()),
-});
-
-export const CIDRv4TypeSchema = createTypeBaseSchema("cidrv4");
-
-export const CIDRv6TypeSchema = createTypeBaseSchema("cidrv6");
-
-export const MACTypeSchema = createTypeBaseSchema("mac").extend({
-  /** 匹配模式 */
-  mode: MatchModeSchema,
-  /** 允许/禁止的 MAC 地址范围 */
-  range: z.array(z.string()),
-});
-
-export const DateTypeSchema = createTypeBaseSchema("date");
-
-export const TimeTypeSchema = createTypeBaseSchema("time").extend({
-  /** 精度 */
-  precision: z.number().optional(),
-});
-
-export const DateTimeTypeSchema = createTypeBaseSchema("datetime").extend({
-  /** 允许时区偏移 */
-  offset: z.boolean(),
-  /** 允许为本地时间 */
-  local: z.boolean(),
-  /** 精度 */
-  precision: z.number().optional(),
-});
-
-export const DurationTypeSchema = createTypeBaseSchema("duration");
-
-export const ReferenceTypeSchema = createTypeBaseSchema("ref").extend({
-  /** 引用路径 */
-  ref: z.string(),
-});
-
-export const CodecTypeSchema = createTypeBaseSchema("codec").extend({
-  /** 输入类型 */
-  input: z.lazy(() => BuiltinTypeSchema),
-  /** 输出类型 */
-  output: z.lazy(() => BuiltinTypeSchema),
-  /** 正向（输入）解码函数 (parse/decode) */
-  forward: z.string(),
-  /** 反向（输出）编码函数 (encode) */
-  backward: z.string(),
-});
-
-export const BasicTypeSchema = z.discriminatedUnion("type", [
-  StringTypeSchema,
-  NumberTypeSchema,
-  BooleanTypeSchema,
-  LiteralTypeSchema,
-  EnumTypeSchema,
-  NullTypeSchema,
-  AnyTypeSchema,
-]);
-
-export const CompositeTypeSchema = z.discriminatedUnion("type", [
-  ArrayTypeSchema,
-  ObjectTypeSchema,
-  TupleTypeSchema,
-  AnyOfTypeSchema,
-  AllOfTypeSchema,
-  OneOfTypeSchema,
-]);
-
-export const FormattedTypeSchema = z.discriminatedUnion("type", [
-  EmailTypeSchema,
-  UUIDTypeSchema,
-  CUIDTypeSchema,
-  GUIDTypeSchema,
-  ULIDTypeSchema,
-  NanoIDTypeSchema,
-  ColorTypeSchema,
-  TimezoneTypeSchema,
-  URLTypeSchema,
-]);
-
-export const BinaryBasedTypeSchema = z.discriminatedUnion("type", [
-  Base32TypeSchema,
-  Base36TypeSchema,
-  Base64TypeSchema,
-  Base64URLTypeSchema,
-  HexTypeSchema,
-  HashTypeSchema,
-]);
-
-export const NetworkTypeSchema = z.discriminatedUnion("type", [
-  IPv4TypeSchema,
-  IPv6TypeSchema,
-  CIDRv4TypeSchema,
-  CIDRv6TypeSchema,
-  MACTypeSchema,
-]);
-
-export const TimeBasedTypeSchema = z.discriminatedUnion("type", [
-  DateTypeSchema,
-  TimeTypeSchema,
-  DateTimeTypeSchema,
-  DurationTypeSchema,
-]);
-
-export const BuiltinTypeSchema: z.ZodTypeAny = z.lazy(() =>
-  z.discriminatedUnion("type", [
-    ...BasicTypeSchema.options,
-    ...CompositeTypeSchema.options,
-    ...FormattedTypeSchema.options,
-    ...BinaryBasedTypeSchema.options,
-    ...NetworkTypeSchema.options,
-    ...TimeBasedTypeSchema.options,
-    ReferenceTypeSchema,
-    CodecTypeSchema,
-  ]),
+export const TypeSchema: z.ZodLazy<z.ZodType> = z.lazy(() =>
+  z.discriminatedUnion("type", Object.values(SchemaMap) as unknown as [z.ZodObject]),
 );
 
-export type Text = z.output<typeof TextSchema>;
-export type Base = z.output<typeof BaseSchema>;
-export type StringType = z.output<typeof StringTypeSchema>;
-export type NumberType = z.output<typeof NumberTypeSchema>;
-export type BooleanType = z.output<typeof BooleanTypeSchema>;
-export type LiteralType = z.output<typeof LiteralTypeSchema>;
-export type EnumType = z.output<typeof EnumTypeSchema>;
-export type NullType = z.output<typeof NullTypeSchema>;
-export type AnyType = z.output<typeof AnyTypeSchema>;
-export type ArrayType = z.output<typeof ArrayTypeSchema>;
-export type ObjectType = z.output<typeof ObjectTypeSchema>;
-export type TupleType = z.output<typeof TupleTypeSchema>;
-export type AnyOfType = z.output<typeof AnyOfTypeSchema>;
-export type AllOfType = z.output<typeof AllOfTypeSchema>;
-export type OneOfType = z.output<typeof OneOfTypeSchema>;
-export type EmailType = z.output<typeof EmailTypeSchema>;
-export type UUIDType = z.output<typeof UUIDTypeSchema>;
-export type CUIDType = z.output<typeof CUIDTypeSchema>;
-export type GUIDType = z.output<typeof GUIDTypeSchema>;
-export type ULIDType = z.output<typeof ULIDTypeSchema>;
-export type NanoIDType = z.output<typeof NanoIDTypeSchema>;
-export type ColorType = z.output<typeof ColorTypeSchema>;
-export type TimezoneType = z.output<typeof TimezoneTypeSchema>;
-export type URLType = z.output<typeof URLTypeSchema>;
-export type Base32Type = z.output<typeof Base32TypeSchema>;
-export type Base36Type = z.output<typeof Base36TypeSchema>;
-export type Base64Type = z.output<typeof Base64TypeSchema>;
-export type Base64URLType = z.output<typeof Base64URLTypeSchema>;
-export type HexType = z.output<typeof HexTypeSchema>;
-export type HashType = z.output<typeof HashTypeSchema>;
-export type IPv4Type = z.output<typeof IPv4TypeSchema>;
-export type IPv6Type = z.output<typeof IPv6TypeSchema>;
-export type CIDRv4Type = z.output<typeof CIDRv4TypeSchema>;
-export type CIDRv6Type = z.output<typeof CIDRv6TypeSchema>;
-export type MACType = z.output<typeof MACTypeSchema>;
-export type DateType = z.output<typeof DateTypeSchema>;
-export type TimeType = z.output<typeof TimeTypeSchema>;
-export type DateTimeType = z.output<typeof DateTimeTypeSchema>;
-export type DurationType = z.output<typeof DurationTypeSchema>;
-export type ReferenceType = z.output<typeof ReferenceTypeSchema>;
-export type CodecType = z.output<typeof CodecTypeSchema>;
-
-export type BasicType = z.output<typeof BasicTypeSchema>;
-export type CompositeType = z.output<typeof CompositeTypeSchema>;
-export type FormattedType = z.output<typeof FormattedTypeSchema>;
-export type BinaryBasedType = z.output<typeof BinaryBasedTypeSchema>;
-export type NetworkType = z.output<typeof NetworkTypeSchema>;
-export type TimeBasedType = z.output<typeof TimeBasedTypeSchema>;
-
-export type Type = z.output<typeof BuiltinTypeSchema>;
-
-export type BuiltinType = Type;
+export type TypeDefinitionInput = z.input<(typeof SchemaMap)[BuiltinTypeKey]>;
+export type TypeDefinitionOutput = z.output<(typeof SchemaMap)[BuiltinTypeKey]>;
