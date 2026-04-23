@@ -43,12 +43,16 @@
 	],
 	"settings": {
 		"cSpell.words": [
-			"webui",
 			"appmeta",
-			"oxfmt",
-			"oxlint",
+			"cidrv",
 			"esbuild",
-			"iconify"
+			"hexa",
+			"iconify",
+			"oxfmt",
+			"oxfmtrc",
+			"oxlint",
+			"webui",
+			"zeabur"
 		],
 		"json.schemas": [
 			{
