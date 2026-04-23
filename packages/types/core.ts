@@ -69,5 +69,5 @@ export interface IProject {
   /** 应用元数据 */
   readonly appMeta: AppMetaOutput;
 
-  registerType(typeDefinition: BuiltinType): void;
+  registerType(path: string, typeDefinition: TypeDefinitionInput): void;
 }
