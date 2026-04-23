@@ -11,6 +11,10 @@
                 "type": {
                     "const": "boolean",
                     "description": "类型标识符，固定为`boolean`。"
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "oui:boolean"
                 }
             }
         }

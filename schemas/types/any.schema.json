@@ -11,6 +11,10 @@
                 "type": {
                     "const": "any",
                     "description": "类型标识符，固定为`any`。"
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "mdi:asterisk"
                 }
             }
         }

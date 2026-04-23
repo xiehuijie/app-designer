@@ -35,6 +35,10 @@
                             "hsla"
                         ]
                     }
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "mdi:palette"
                 }
             },
             "required": [

@@ -23,6 +23,10 @@
                 "maxLength": {
                     "type": "number",
                     "description": "最大长度。"
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "oui:string"
                 }
             }
         }

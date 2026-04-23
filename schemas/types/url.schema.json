@@ -77,6 +77,10 @@
                 "path": {
                     "$ref": "#/definitions/matchStringList",
                     "description": "路径。"
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "mdi:link-variant"
                 }
             },
             "required": [

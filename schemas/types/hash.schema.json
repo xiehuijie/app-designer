@@ -28,6 +28,10 @@
                         "sha3-384",
                         "sha3-512"
                     ]
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "mdi:hash"
                 }
             },
             "required": [

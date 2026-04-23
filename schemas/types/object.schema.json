@@ -29,6 +29,10 @@
                 "additionalProperties": {
                     "type": "boolean",
                     "description": "允许额外属性。"
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "mdi:code-json"
                 }
             },
             "required": [

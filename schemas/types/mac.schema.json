@@ -27,6 +27,10 @@
                     "items": {
                         "type": "string"
                     }
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "mdi:network-outline"
                 }
             },
             "required": [

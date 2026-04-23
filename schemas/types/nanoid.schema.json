@@ -19,6 +19,10 @@
                 "alphabet": {
                     "type": "string",
                     "description": "字母表。"
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "mdi:fingerprint"
                 }
             }
         }

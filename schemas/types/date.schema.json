@@ -11,6 +11,10 @@
                 "type": {
                     "const": "date",
                     "description": "类型标识符，固定为`date`。"
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "mdi:calendar"
                 }
             }
         }

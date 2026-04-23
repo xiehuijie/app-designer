@@ -11,6 +11,10 @@
                 "type": {
                     "const": "timezone",
                     "description": "类型标识符，固定为`timezone`。"
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "mdi:timezone"
                 }
             }
         }

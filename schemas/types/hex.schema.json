@@ -11,6 +11,10 @@
                 "type": {
                     "const": "hex",
                     "description": "类型标识符，固定为`hex`。"
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "mdi:code-string"
                 }
             }
         }

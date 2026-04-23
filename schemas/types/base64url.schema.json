@@ -11,6 +11,10 @@
                 "type": {
                     "const": "base64url",
                     "description": "类型标识符，固定为`base64url`。"
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "mdi:code-string"
                 }
             }
         }

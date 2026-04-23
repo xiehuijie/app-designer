@@ -15,6 +15,10 @@
                 "precision": {
                     "type": "number",
                     "description": "精度。"
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "mdi:clock-outline"
                 }
             }
         }

@@ -11,6 +11,10 @@
                 "type": {
                     "const": "duration",
                     "description": "类型标识符，固定为`duration`。"
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "mdi:timer-sand"
                 }
             }
         }

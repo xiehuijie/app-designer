@@ -31,6 +31,10 @@
                 "multipleOf": {
                     "type": "number",
                     "description": "步长。"
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "oui:number"
                 }
             }
         }

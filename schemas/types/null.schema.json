@@ -11,6 +11,10 @@
                 "type": {
                     "const": "null",
                     "description": "类型标识符，固定为`null`。"
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "mdi:null"
                 }
             }
         }

@@ -28,6 +28,10 @@
                             "type": "null"
                         }
                     ]
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "carbon:quotes"
                 }
             },
             "required": [

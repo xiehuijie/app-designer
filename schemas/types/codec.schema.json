@@ -27,6 +27,10 @@
                 "backward": {
                     "type": "string",
                     "description": "反向（输出）编码函数（encode）。"
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "mdi:swap-horizontal-bold"
                 }
             },
             "required": [

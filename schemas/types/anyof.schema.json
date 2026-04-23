@@ -18,6 +18,10 @@
                     "items": {
                         "$ref": "main.schema.json"
                     }
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "mdi:set-all"
                 }
             },
             "required": [

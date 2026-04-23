@@ -15,7 +15,9 @@
             "$ref": "../common/i18nText.schema.json"
         },
         "icon": {
-            "type": "string"
+            "type": "string",
+            "title": "图标",
+            "description": "类型的图标，基于iconify库的图标名称，通常以图标库前缀再加图标名称的形式表示，例如：mdi:account。iconify参考地址：https://icones.js.org"
         },
         "sort": {
             "type": "number"

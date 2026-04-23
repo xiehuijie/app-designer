@@ -11,6 +11,10 @@
                 "type": {
                     "const": "cidrv4",
                     "description": "类型标识符，固定为`cidrv4`。"
+                },
+                "icon": {
+                    "type": "string",
+                    "default": "mdi:ip-network"
                 }
             }
         }
