@@ -39,6 +39,14 @@
 		{
 			"name": "Playground",
 			"path": "playground"
+		},
+		{
+			"name": "Zod Generator",
+			"path": "generators/zod"
+		},
+		{
+			"name": "OpenAPI Generator",
+			"path": "generators/openapi"
 		}
 	],
 	"settings": {
