@@ -9,5 +9,10 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "packageManager": "pnpm@10.32.1"
+  "packageManager": "pnpm@10.32.1",
+  "dependencies": {
+    "@app-designer/types": "workspace:*",
+    "ts-morph": "catalog:",
+    "zod": "catalog:"
+  }
 }
