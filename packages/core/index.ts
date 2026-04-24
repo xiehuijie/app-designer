@@ -1,4 +1,10 @@
-import type { IProject } from "@app-designer/types";
+import type {
+  IProject,
+  AppMetaOutput,
+  TypeDefinitionOutput,
+  AppMetaInput,
+  TypeDefinitionInput,
+} from "@app-designer/types";
 import { AppMetaSchema, TypeSchema } from "@app-designer/types";
 
 export class DesignProject implements IProject {
