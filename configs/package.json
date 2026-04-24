@@ -1,8 +1,8 @@
 {
-    "name": "@app-designer/configs",
-    "version": "0.1.0",
-    "dependencies": {
-        "oxfmt": "catalog:",
-        "oxlint": "catalog:"
-    }
+  "name": "@app-designer/configs",
+  "version": "0.1.0",
+  "dependencies": {},
+  "devDependencies": {
+    "vite-plus": "catalog:"
+  }
 }

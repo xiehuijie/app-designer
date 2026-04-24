@@ -5,7 +5,7 @@ packages:
   - "configs"
 
 allowBuilds:
-  '@vscode/vsce-sign': true
+  "@vscode/vsce-sign": true
   esbuild: true
   keytar: true
 
@@ -20,10 +20,21 @@ catalog:
   eslint: "^9.39.3"
   "inquirer": "^9.2.12"
   "ora": "^8.0.1"
-  oxfmt: ^0.46.0
-  oxlint: ^1.61.0
   ts-morph: ^28.0.0
   turbo: "^2.9.6"
   typescript: "^6.0.0"
   typescript-eslint: "^8.56.1"
   zod: ^4.3.6
+  vite: npm:@voidzero-dev/vite-plus-core@latest
+  vitest: npm:@voidzero-dev/vite-plus-test@latest
+  vite-plus: latest
+overrides:
+  vite: "catalog:"
+  vitest: "catalog:"
+peerDependencyRules:
+  allowAny:
+    - vite
+    - vitest
+  allowedVersions:
+    vite: "*"
+    vitest: "*"

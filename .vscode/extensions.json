@@ -2,6 +2,7 @@
   "recommendations": [
     "Vue.volar",
     "vitest.explorer",
-    "ms-playwright.playwright"
+    "ms-playwright.playwright",
+    "VoidZero.vite-plus-extension-pack"
   ]
 }

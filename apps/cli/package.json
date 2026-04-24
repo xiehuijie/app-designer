@@ -2,17 +2,19 @@
   "name": "@app-designer/cli",
   "version": "0.1.0",
   "description": "CLI tool for App Designer",
-  "keywords": ["cli", "app-designer"],
-  "author": "",
-  "license": "MIT",
-  "packageManager": "pnpm@10.32.1",
-  "type": "module",
-  "files": [
-    "dist"
+  "keywords": [
+    "app-designer",
+    "cli"
   ],
+  "license": "MIT",
+  "author": "",
   "bin": {
     "app-designer-cli": "./dist/cli.js"
   },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
   "scripts": {
     "build": "tsc && chmod +x ./dist/cli.js",
     "dev": "tsc --watch",
@@ -20,8 +22,8 @@
   },
   "dependencies": {
     "chalk": "catalog:",
-    "commander": "catalog:",
     "colorette": "catalog:",
+    "commander": "catalog:",
     "inquirer": "catalog:",
     "ora": "catalog:"
   },
@@ -29,5 +31,6 @@
     "@types/inquirer": "catalog:",
     "@types/node": "catalog:",
     "typescript": "catalog:"
-  }
+  },
+  "packageManager": "pnpm@10.32.1"
 }

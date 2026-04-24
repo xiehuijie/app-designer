@@ -1,22 +1,38 @@
 {
   "name": "app-designer",
   "displayName": "App Designer",
-  "description": "App Designer for VSCode.",
   "version": "0.1.0",
-  "publisher": "geek213",
-  "engines": {
-    "vscode": "^1.116.0"
-  },
+  "description": "App Designer for VSCode.",
   "categories": [
-    "Other",
-    "Notebooks"
+    "Notebooks",
+    "Other"
   ],
-  "icon": "icon/main256.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/xiehuijie/app-designer"
   },
+  "publisher": "geek213",
   "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test",
+    "package": "vsce package --follow-symlinks"
+  },
+  "devDependencies": {
+    "@types/mocha": "catalog:",
+    "@types/node": "catalog:",
+    "@types/vscode": "^1.116.0",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.9.0",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:"
+  },
   "contributes": {
     "commands": [
       {
@@ -75,24 +91,8 @@
       }
     ]
   },
-  "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src",
-    "test": "vscode-test",
-    "package": "vsce package --follow-symlinks"
-  },
-  "devDependencies": {
-    "@types/mocha": "catalog:",
-    "@types/node": "catalog:",
-    "@types/vscode": "^1.116.0",
-    "@vscode/test-cli": "^0.0.12",
-    "@vscode/test-electron": "^2.5.2",
-    "@vscode/vsce": "^3.9.0",
-    "eslint": "catalog:",
-    "typescript": "catalog:",
-    "typescript-eslint": "catalog:"
+  "icon": "icon/main256.png",
+  "engines": {
+    "vscode": "^1.116.0"
   }
 }

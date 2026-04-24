@@ -2,6 +2,9 @@
   "name": "@app-designer/types",
   "version": "0.1.0",
   "description": "",
+  "keywords": [],
+  "license": "MIT",
+  "author": "",
   "type": "module",
   "main": "index.ts",
   "exports": {
@@ -9,16 +12,12 @@
       "import": "./index.ts"
     }
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
-  "packageManager": "pnpm@10.32.1",
-  "devDependencies": {
-    "@app-designer/configs": "workspace:*",
-    "oxfmt": "catalog:",
-    "oxlint": "catalog:"
-  },
   "dependencies": {
     "zod": "catalog:"
-  }
+  },
+  "devDependencies": {
+    "@app-designer/configs": "workspace:*",
+    "vite-plus": "catalog:"
+  },
+  "packageManager": "pnpm@10.32.1"
 }

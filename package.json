@@ -1,21 +1,24 @@
 {
   "name": "app-designer",
-  "description": "A visualization design application that structures data, defines business logic, specifies interface definitions, and allows exporting template code.",
   "version": "0.1.0",
+  "description": "A visualization design application that structures data, defines business logic, specifies interface definitions, and allows exporting template code.",
   "author": "V5xie <v5.xiehuijie@outlook.com>",
   "type": "module",
-  "engines": {
-    "node": "^20.19.0 || >=22.12.0"
-  },
   "scripts": {
     "changeset": "changeset",
     "changeset:status": "changeset status --verbose",
     "changeset:version": "changeset version",
-    "changeset:publish": "changeset publish"
+    "changeset:publish": "changeset publish",
+    "prepare": "vp config"
   },
   "devDependencies": {
     "@changesets/cli": "catalog:",
+    "turbo": "catalog:",
     "typescript": "catalog:",
-    "turbo": "catalog:"
-  }
+    "vite-plus": "catalog:"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "packageManager": "pnpm@10.33.2"
 }
