@@ -1,4 +1,5 @@
 {
+    "$id": "app-designer/generators/openapi.schema.json",
     "title": "ZodGenerator",
     "description": "用于描述Zod生成器的配置",
     "type": "object",

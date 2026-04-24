@@ -1,4 +1,5 @@
 {
+    "$id": "app-designer/generators/openapi.schema.json",
     "title": "OpenApiGenerator",
     "description": "用于描述OpenAPI生成器的配置",
     "type": "object",
