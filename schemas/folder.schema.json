@@ -1,16 +1,16 @@
 {
-	"id": "app-designer/folder.schema.json",
-	"title": "Folder",
-	"type": "object",
-	"description": "用于描述文件夹信息",
-	"properties": {
-		"name": {
-			"type": "string",
-			"description": "文件夹名称"
-		},
-		"icon": {
-			"type": "string",
-			"description": "文件夹图标"
-		}
-	}
+  "id": "app-designer/folder.schema.json",
+  "title": "Folder",
+  "type": "object",
+  "description": "用于描述文件夹信息",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "文件夹名称"
+    },
+    "icon": {
+      "type": "string",
+      "description": "文件夹图标"
+    }
+  }
 }

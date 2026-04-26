@@ -1,22 +1,22 @@
 {
-    "$id": "app-designer/types/date.schema.json",
-    "title": "DateTypeDefinition",
-    "allOf": [
-        {
-            "$ref": "base.schema.json"
+  "$id": "app-designer/types/date.schema.json",
+  "title": "DateTypeDefinition",
+  "allOf": [
+    {
+      "$ref": "base.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "date",
+          "description": "类型标识符，固定为`date`。"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "date",
-                    "description": "类型标识符，固定为`date`。"
-                },
-                "icon": {
-                    "type": "string",
-                    "default": "mdi:calendar"
-                }
-            }
+        "icon": {
+          "type": "string",
+          "default": "mdi:calendar"
         }
-    ]
+      }
+    }
+  ]
 }

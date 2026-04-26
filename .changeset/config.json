@@ -1,16 +1,13 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
-  "changelog": [
-    "@changesets/cli/changelog",
-    null
-  ],
+  "changelog": ["@changesets/cli/changelog", null],
   "commit": false,
   "fixed": [
     [
       "@app-designer/vscode-extension",
       "@app-designer/components",
       "@app-designer/core",
-      "@app-designer/types",
+      "@app-designer/schemas",
       "@app-designer/gen-openapi",
       "@app-designer/gen-zod"
     ]

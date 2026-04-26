@@ -1,32 +1,30 @@
 {
-    "$id": "app-designer/types/tuple.schema.json",
-    "title": "TupleTypeDefinition",
-    "allOf": [
-        {
-            "$ref": "base.schema.json"
+  "$id": "app-designer/types/tuple.schema.json",
+  "title": "TupleTypeDefinition",
+  "allOf": [
+    {
+      "$ref": "base.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "tuple",
+          "description": "类型标识符，固定为`tuple`。"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "tuple",
-                    "description": "类型标识符，固定为`tuple`。"
-                },
-                "items": {
-                    "type": "array",
-                    "description": "元组元素类型。",
-                    "items": {
-                        "$ref": "main.schema.json"
-                    }
-                },
-                "icon": {
-                    "type": "string",
-                    "default": "mdi:table-row"
-                }
-            },
-            "required": [
-                "items"
-            ]
+        "items": {
+          "type": "array",
+          "description": "元组元素类型。",
+          "items": {
+            "$ref": "main.schema.json"
+          }
+        },
+        "icon": {
+          "type": "string",
+          "default": "mdi:table-row"
         }
-    ]
+      },
+      "required": ["items"]
+    }
+  ]
 }

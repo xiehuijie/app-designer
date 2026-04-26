@@ -1,4 +1,4 @@
 {
-	"$id": "app-designer/functions/codecDecode.schema.json",
-	"title": "CodecDecodeFunction"
+  "$id": "app-designer/functions/codecDecode.schema.json",
+  "title": "CodecDecodeFunction"
 }

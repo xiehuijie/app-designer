@@ -1,44 +1,39 @@
 {
-    "$id": "app-designer/types/codec.schema.json",
-    "title": "CodecTypeDefinition",
-    "allOf": [
-        {
-            "$ref": "base.schema.json"
+  "$id": "app-designer/types/codec.schema.json",
+  "title": "CodecTypeDefinition",
+  "allOf": [
+    {
+      "$ref": "base.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "codec",
+          "description": "类型标识符，固定为`codec`。"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "codec",
-                    "description": "类型标识符，固定为`codec`。"
-                },
-                "input": {
-                    "$ref": "main.schema.json",
-                    "description": "输入类型。"
-                },
-                "output": {
-                    "$ref": "main.schema.json",
-                    "description": "输出类型。"
-                },
-                "decode": {
-                    "type": "string",
-                    "description": "正向（输入）解码函数（parse/decode）。"
-                },
-                "encode": {
-                    "type": "string",
-                    "description": "反向（输出）编码函数（encode）。"
-                },
-                "icon": {
-                    "type": "string",
-                    "default": "mdi:swap-horizontal-bold"
-                }
-            },
-            "required": [
-                "input",
-                "output",
-                "decode",
-                "encode"
-            ]
+        "input": {
+          "$ref": "main.schema.json",
+          "description": "输入类型。"
+        },
+        "output": {
+          "$ref": "main.schema.json",
+          "description": "输出类型。"
+        },
+        "decode": {
+          "type": "string",
+          "description": "正向（输入）解码函数（parse/decode）。"
+        },
+        "encode": {
+          "type": "string",
+          "description": "反向（输出）编码函数（encode）。"
+        },
+        "icon": {
+          "type": "string",
+          "default": "mdi:swap-horizontal-bold"
         }
-    ]
+      },
+      "required": ["input", "output", "decode", "encode"]
+    }
+  ]
 }

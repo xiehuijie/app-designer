@@ -1,8 +1,22 @@
 {
-  "name": "@app-designer/webui",
-  "version": "0.1.0",
+  "name": "webui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vp dev",
+    "build": "tsc && vp build",
+    "preview": "vp preview"
+  },
+  "dependencies": {
+    "@app-designer/components": "workspace:*",
+    "@app-designer/core": "workspace:*",
+    "@app-designer/schemas": "workspace:*"
+  },
   "devDependencies": {
     "@app-designer/configs": "workspace:*",
-    "@app-designer/types": "workspace:*"
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
   }
 }

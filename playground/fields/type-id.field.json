@@ -1,11 +1,11 @@
 {
-	"id": "TYPE_ID",
-	"title": {
-		"zh-CN": "类型唯一标识符"
-	},
-	"description": {
-		"zh-CN": "类型的唯一标识符，在应用程序中必须唯一。"
-	},
-	"type": "string",
-	"icon": "material-symbols:vpn-key-rounded"
+  "id": "TYPE_ID",
+  "title": {
+    "zh-CN": "类型唯一标识符"
+  },
+  "description": {
+    "zh-CN": "类型的唯一标识符，在应用程序中必须唯一。"
+  },
+  "type": "string",
+  "icon": "material-symbols:vpn-key-rounded"
 }

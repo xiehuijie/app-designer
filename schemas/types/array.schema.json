@@ -1,37 +1,35 @@
 {
-    "$id": "app-designer/types/array.schema.json",
-    "title": "ArrayTypeDefinition",
-    "allOf": [
-        {
-            "$ref": "base.schema.json"
+  "$id": "app-designer/types/array.schema.json",
+  "title": "ArrayTypeDefinition",
+  "allOf": [
+    {
+      "$ref": "base.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "array",
+          "description": "类型标识符，固定为`array`。"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "array",
-                    "description": "类型标识符，固定为`array`。"
-                },
-                "itemType": {
-                    "$ref": "main.schema.json",
-                    "description": "数组元素类型。"
-                },
-                "minItems": {
-                    "type": "number",
-                    "description": "最小长度。"
-                },
-                "maxItems": {
-                    "type": "number",
-                    "description": "最大长度。"
-                },
-                "icon": {
-                    "type": "string",
-                    "default": "mdi:code-brackets-square"
-                }
-            },
-            "required": [
-                "itemType"
-            ]
+        "itemType": {
+          "$ref": "main.schema.json",
+          "description": "数组元素类型。"
+        },
+        "minItems": {
+          "type": "number",
+          "description": "最小长度。"
+        },
+        "maxItems": {
+          "type": "number",
+          "description": "最大长度。"
+        },
+        "icon": {
+          "type": "string",
+          "default": "mdi:code-brackets-square"
         }
-    ]
+      },
+      "required": ["itemType"]
+    }
+  ]
 }

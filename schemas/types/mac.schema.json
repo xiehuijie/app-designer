@@ -1,42 +1,35 @@
 {
-    "$id": "app-designer/types/mac.schema.json",
-    "title": "MACTypeDefinition",
-    "allOf": [
-        {
-            "$ref": "base.schema.json"
+  "$id": "app-designer/types/mac.schema.json",
+  "title": "MACTypeDefinition",
+  "allOf": [
+    {
+      "$ref": "base.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "mac",
+          "description": "类型标识符，固定为`mac`。"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "mac",
-                    "description": "类型标识符，固定为`mac`。"
-                },
-                "mode": {
-                    "type": "string",
-                    "description": "匹配模式。",
-                    "enum": [
-                        "whitelist",
-                        "blacklist",
-                        "none"
-                    ]
-                },
-                "range": {
-                    "type": "array",
-                    "description": "允许/禁止的 MAC 地址范围。",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "icon": {
-                    "type": "string",
-                    "default": "mdi:network-outline"
-                }
-            },
-            "required": [
-                "mode",
-                "range"
-            ]
+        "mode": {
+          "type": "string",
+          "description": "匹配模式。",
+          "enum": ["whitelist", "blacklist", "none"]
+        },
+        "range": {
+          "type": "array",
+          "description": "允许/禁止的 MAC 地址范围。",
+          "items": {
+            "type": "string"
+          }
+        },
+        "icon": {
+          "type": "string",
+          "default": "mdi:network-outline"
         }
-    ]
+      },
+      "required": ["mode", "range"]
+    }
+  ]
 }

@@ -1,21 +1,21 @@
 {
-    "$id": "app-designer/common/i18nLocale.schema.json",
-    "title": "I18nLocale",
-    "description": "一个字符串，表示多语言文本的区域设置，无具体标准限制，例如`zh-CN`、`zh`等。",
-    "type": "string",
-    "examples": [
-        "zh",
-        "zh-CN",
-        "zh-TW",
-        "en",
-        "en-US",
-        "ja",
-        "ja-JP",
-        "fr",
-        "fr-FR",
-        "de",
-        "de-DE",
-        "es",
-        "es-ES"
-    ]
+  "$id": "app-designer/common/i18nLocale.schema.json",
+  "title": "I18nLocale",
+  "description": "一个字符串，表示多语言文本的区域设置，无具体标准限制，例如`zh-CN`、`zh`等。",
+  "type": "string",
+  "examples": [
+    "zh",
+    "zh-CN",
+    "zh-TW",
+    "en",
+    "en-US",
+    "ja",
+    "ja-JP",
+    "fr",
+    "fr-FR",
+    "de",
+    "de-DE",
+    "es",
+    "es-ES"
+  ]
 }

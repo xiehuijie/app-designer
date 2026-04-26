@@ -1,44 +1,41 @@
 {
-    "$id": "app-designer/types/object.schema.json",
-    "title": "ObjectTypeDefinition",
-    "allOf": [
-        {
-            "$ref": "base.schema.json"
+  "$id": "app-designer/types/object.schema.json",
+  "title": "ObjectTypeDefinition",
+  "allOf": [
+    {
+      "$ref": "base.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "object",
+          "description": "类型标识符，固定为`object`。"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "object",
-                    "description": "类型标识符，固定为`object`。"
-                },
-                "properties": {
-                    "type": "object",
-                    "description": "属性。",
-                    "additionalProperties": {
-                        "$ref": "main.schema.json"
-                    }
-                },
-                "required": {
-                    "type": "array",
-                    "description": "必填属性。",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "additionalProperties": {
-                    "type": "boolean",
-                    "description": "允许额外属性。"
-                },
-                "icon": {
-                    "type": "string",
-                    "default": "mdi:code-json"
-                }
-            },
-            "required": [
-                "properties",
-                "required"
-            ]
+        "properties": {
+          "type": "object",
+          "description": "属性。",
+          "additionalProperties": {
+            "$ref": "main.schema.json"
+          }
+        },
+        "required": {
+          "type": "array",
+          "description": "必填属性。",
+          "items": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": {
+          "type": "boolean",
+          "description": "允许额外属性。"
+        },
+        "icon": {
+          "type": "string",
+          "default": "mdi:code-json"
         }
-    ]
+      },
+      "required": ["properties", "required"]
+    }
+  ]
 }

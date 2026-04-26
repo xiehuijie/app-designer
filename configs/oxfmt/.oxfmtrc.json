@@ -5,5 +5,5 @@
   "insertFinalNewline": true,
   "semi": true,
   "quoteProps": "as-needed",
-  "ignorePatterns": [],
+  "ignorePatterns": []
 }

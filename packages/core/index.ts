@@ -4,8 +4,8 @@ import type {
   TypeDefinitionOutput,
   AppMetaInput,
   TypeDefinitionInput,
-} from "@app-designer/types";
-import { AppMetaSchema, TypeSchema } from "@app-designer/types";
+} from "@app-designer/schemas";
+import { AppMetaSchema, TypeSchema } from "@app-designer/schemas";
 
 export class DesignProject implements IProject {
   public readonly appMeta: AppMetaOutput;

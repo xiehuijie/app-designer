@@ -1,4 +1,4 @@
 {
-	"$id": "app-designer/interfaces/http.schema.json",
-	"title": "HTTP接口定义"
+  "$id": "app-designer/interfaces/http.schema.json",
+  "title": "HTTP接口定义"
 }

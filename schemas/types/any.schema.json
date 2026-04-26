@@ -1,22 +1,22 @@
 {
-    "$id": "app-designer/types/any.schema.json",
-    "title": "AnyTypeDefinition",
-    "allOf": [
-        {
-            "$ref": "base.schema.json"
+  "$id": "app-designer/types/any.schema.json",
+  "title": "AnyTypeDefinition",
+  "allOf": [
+    {
+      "$ref": "base.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "any",
+          "description": "类型标识符，固定为`any`。"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "any",
-                    "description": "类型标识符，固定为`any`。"
-                },
-                "icon": {
-                    "type": "string",
-                    "default": "mdi:asterisk"
-                }
-            }
+        "icon": {
+          "type": "string",
+          "default": "mdi:asterisk"
         }
-    ]
+      }
+    }
+  ]
 }

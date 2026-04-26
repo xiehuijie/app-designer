@@ -43,6 +43,7 @@ Options:
 ```
 
 Example:
+
 ```bash
 app-designer-cli validate --file appmeta.json
 ```
@@ -62,6 +63,7 @@ Options:
 ```
 
 Example:
+
 ```bash
 app-designer-cli generate --type zod --output ./generated
 ```
@@ -79,6 +81,7 @@ Options:
 ```
 
 Example:
+
 ```bash
 app-designer-cli init --name my-project
 ```
@@ -97,6 +100,7 @@ Options:
 ```
 
 Example:
+
 ```bash
 app-designer-cli build --minify --sourcemap
 ```
@@ -116,6 +120,7 @@ Options:
 ```
 
 Example:
+
 ```bash
 app-designer-cli preview --host 0.0.0.0 --port 8080 --open
 ```
@@ -133,6 +138,7 @@ Options:
 ```
 
 Example:
+
 ```bash
 app-designer-cli start --watch
 ```

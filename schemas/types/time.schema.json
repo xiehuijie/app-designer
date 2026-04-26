@@ -1,26 +1,26 @@
 {
-    "$id": "app-designer/types/time.schema.json",
-    "title": "TimeTypeDefinition",
-    "allOf": [
-        {
-            "$ref": "base.schema.json"
+  "$id": "app-designer/types/time.schema.json",
+  "title": "TimeTypeDefinition",
+  "allOf": [
+    {
+      "$ref": "base.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "time",
+          "description": "类型标识符，固定为`time`。"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "time",
-                    "description": "类型标识符，固定为`time`。"
-                },
-                "precision": {
-                    "type": "number",
-                    "description": "精度。"
-                },
-                "icon": {
-                    "type": "string",
-                    "default": "mdi:clock-outline"
-                }
-            }
+        "precision": {
+          "type": "number",
+          "description": "精度。"
+        },
+        "icon": {
+          "type": "string",
+          "default": "mdi:clock-outline"
         }
-    ]
+      }
+    }
+  ]
 }

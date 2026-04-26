@@ -1,13 +1,13 @@
 {
-    "$id": "app-designer/common/i18nText.schema.json",
-    "title": "多语言文本描述",
-    "description": "一个对象，键为语言代码，值为对应语言的文本描述。",
-    "type": "object",
-    "propertyNames": {
-        "$ref": "i18nLocale.schema.json"
-    },
-    "additionalProperties": {
-        "type": "string",
-        "description": "对应语言的具体文案描述。"
-    }
+  "$id": "app-designer/common/i18nText.schema.json",
+  "title": "多语言文本描述",
+  "description": "一个对象，键为语言代码，值为对应语言的文本描述。",
+  "type": "object",
+  "propertyNames": {
+    "$ref": "i18nLocale.schema.json"
+  },
+  "additionalProperties": {
+    "type": "string",
+    "description": "对应语言的具体文案描述。"
+  }
 }

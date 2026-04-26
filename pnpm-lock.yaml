@@ -78,6 +78,9 @@ importers:
 
   apps/cli:
     dependencies:
+      '@app-designer/schemas':
+        specifier: workspace:*
+        version: link:../../packages/schemas
       chalk:
         specifier: 'catalog:'
         version: 5.6.2
@@ -135,13 +138,29 @@ importers:
         version: 8.58.2(eslint@9.39.4)(typescript@6.0.3)
 
   apps/webui:
-    devDependencies:
+    dependencies:
+      '@app-designer/components':
+        specifier: workspace:*
+        version: link:../../packages/components
       '@app-designer/configs':
         specifier: workspace:*
         version: link:../../configs
-      '@app-designer/types':
+      '@app-designer/core':
         specifier: workspace:*
-        version: link:../../packages/types
+        version: link:../../packages/core
+      '@app-designer/schemas':
+        specifier: workspace:*
+        version: link:../../packages/schemas
+    devDependencies:
+      typescript:
+        specifier: ~6.0.2
+        version: 6.0.3
+      vite:
+        specifier: npm:@voidzero-dev/vite-plus-core@latest
+        version: '@voidzero-dev/vite-plus-core@0.1.19(@types/node@22.19.17)(typescript@6.0.3)'
+      vite-plus:
+        specifier: 'catalog:'
+        version: 0.1.19(@types/node@22.19.17)(@voidzero-dev/vite-plus-core@0.1.19(@types/node@22.19.17)(typescript@6.0.3))(typescript@6.0.3)
 
   configs:
     devDependencies:
@@ -153,9 +172,9 @@ importers:
 
   generators/zod:
     dependencies:
-      '@app-designer/types':
+      '@app-designer/schemas':
         specifier: workspace:*
-        version: link:../../packages/types
+        version: link:../../packages/schemas
       ts-morph:
         specifier: 'catalog:'
         version: 28.0.0
@@ -167,11 +186,11 @@ importers:
 
   packages/core:
     dependencies:
-      '@app-designer/types':
+      '@app-designer/schemas':
         specifier: workspace:*
-        version: link:../types
+        version: link:../schemas
 
-  packages/types:
+  packages/schemas:
     dependencies:
       zod:
         specifier: 'catalog:'
@@ -4036,6 +4055,45 @@ snapshots:
   '@voidzero-dev/vite-plus-linux-x64-musl@0.1.19':
     optional: true
 
+  '@voidzero-dev/vite-plus-test@0.1.19(@types/node@22.19.17)(@voidzero-dev/vite-plus-core@0.1.19(@types/node@22.19.17)(typescript@6.0.3))(typescript@6.0.3)':
+    dependencies:
+      '@standard-schema/spec': 1.1.0
+      '@types/chai': 5.2.3
+      '@voidzero-dev/vite-plus-core': 0.1.19(@types/node@22.19.17)(typescript@6.0.3)
+      es-module-lexer: 1.7.0
+      obug: 2.1.1
+      pixelmatch: 7.1.0
+      pngjs: 7.0.0
+      sirv: 3.0.2
+      std-env: 4.1.0
+      tinybench: 2.9.0
+      tinyexec: 1.1.1
+      tinyglobby: 0.2.16
+      vite: '@voidzero-dev/vite-plus-core@0.1.19(@types/node@22.19.17)(typescript@6.0.3)'
+      ws: 8.20.0
+    optionalDependencies:
+      '@types/node': 22.19.17
+    transitivePeerDependencies:
+      - '@arethetypeswrong/core'
+      - '@tsdown/css'
+      - '@tsdown/exe'
+      - '@vitejs/devtools'
+      - bufferutil
+      - esbuild
+      - jiti
+      - less
+      - publint
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - terser
+      - tsx
+      - typescript
+      - unplugin-unused
+      - utf-8-validate
+      - yaml
+
   '@voidzero-dev/vite-plus-test@0.1.19(@types/node@22.19.17)(typescript@6.0.3)(vite@8.0.10(@types/node@22.19.17))':
     dependencies:
       '@standard-schema/spec': 1.1.0
@@ -6012,6 +6070,53 @@ snapshots:
       spdx-expression-parse: 3.0.1
 
   version-range@4.15.0: {}
+
+  vite-plus@0.1.19(@types/node@22.19.17)(@voidzero-dev/vite-plus-core@0.1.19(@types/node@22.19.17)(typescript@6.0.3))(typescript@6.0.3):
+    dependencies:
+      '@oxc-project/types': 0.126.0
+      '@voidzero-dev/vite-plus-core': 0.1.19(@types/node@22.19.17)(typescript@6.0.3)
+      '@voidzero-dev/vite-plus-test': 0.1.19(@types/node@22.19.17)(@voidzero-dev/vite-plus-core@0.1.19(@types/node@22.19.17)(typescript@6.0.3))(typescript@6.0.3)
+      oxfmt: 0.45.0
+      oxlint: 1.60.0(oxlint-tsgolint@0.21.1)
+      oxlint-tsgolint: 0.21.1
+    optionalDependencies:
+      '@voidzero-dev/vite-plus-darwin-arm64': 0.1.19
+      '@voidzero-dev/vite-plus-darwin-x64': 0.1.19
+      '@voidzero-dev/vite-plus-linux-arm64-gnu': 0.1.19
+      '@voidzero-dev/vite-plus-linux-arm64-musl': 0.1.19
+      '@voidzero-dev/vite-plus-linux-x64-gnu': 0.1.19
+      '@voidzero-dev/vite-plus-linux-x64-musl': 0.1.19
+      '@voidzero-dev/vite-plus-win32-arm64-msvc': 0.1.19
+      '@voidzero-dev/vite-plus-win32-x64-msvc': 0.1.19
+    transitivePeerDependencies:
+      - '@arethetypeswrong/core'
+      - '@edge-runtime/vm'
+      - '@opentelemetry/api'
+      - '@tsdown/css'
+      - '@tsdown/exe'
+      - '@types/node'
+      - '@vitejs/devtools'
+      - '@vitest/coverage-istanbul'
+      - '@vitest/coverage-v8'
+      - '@vitest/ui'
+      - bufferutil
+      - esbuild
+      - happy-dom
+      - jiti
+      - jsdom
+      - less
+      - publint
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - terser
+      - tsx
+      - typescript
+      - unplugin-unused
+      - utf-8-validate
+      - vite
+      - yaml
 
   vite-plus@0.1.19(@types/node@22.19.17)(typescript@6.0.3)(vite@8.0.10(@types/node@22.19.17)):
     dependencies:

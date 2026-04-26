@@ -1,77 +1,71 @@
 {
-    "$id": "app-designer/appmeta.schema.json",
-    "title": "AppMeta",
-    "description": "用于描述应用程序元数据的 JSON Schema",
-    "type": "object",
-    "properties": {
-        "name": {
-            "type": "string",
-            "description": "应用程序的名称。"
-        },
-        "description": {
-            "type": "string",
-            "description": "应用程序的描述。"
-        },
-        "version": {
-            "type": "string",
-            "description": "应用程序的版本号。例如`1.0.0`。"
-        },
-        "author": {
-            "type": "string",
-            "description": "应用程序的作者"
-        },
-        "languages": {
-            "type": "array",
-            "description": "应用程序支持的语言列表。",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "code": {
-                        "$ref": "common/i18nLocale.schema.json"
-                    },
-                    "name": {
-                        "type": "string",
-                        "description": "语言名称。"
-                    }
-                },
-                "required": [
-                    "code",
-                    "name"
-                ]
-            },
-            "default": [
-                {
-                    "code": "default",
-                    "name": "默认语言"
-                }
-            ]
-        },
-        "defaultLanguage": {
-            "description": "应用程序的默认语言，若`languages`未指定，则默认为`default`，否则默认为`languages`中的第一个。若指定了`defaultLanguage`，则必须在`languages`中存在。",
-            "$ref": "common/i18nLocale.schema.json"
-        },
-        "generators": {
-            "type": "array",
-            "description": "生成器配置",
-            "items": {
-                "oneOf": [
-                    {
-                        "$ref": "./generators/zod.schema.json"
-                    },
-                    {
-                        "$ref": "./generators/openapi.schema.json"
-                    }
-                ]
-            }
-        },
-        "engine": {
-            "type": "string",
-            "description": "应用设计器的最低版本要求，例如`0.1.0`。"
-        }
+  "$id": "app-designer/appmeta.schema.json",
+  "title": "AppMeta",
+  "description": "用于描述应用程序元数据的 JSON Schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "应用程序的名称。"
     },
-    "required": [
-        "name",
-        "version"
-    ],
-    "additionalProperties": true
+    "description": {
+      "type": "string",
+      "description": "应用程序的描述。"
+    },
+    "version": {
+      "type": "string",
+      "description": "应用程序的版本号。例如`1.0.0`。"
+    },
+    "author": {
+      "type": "string",
+      "description": "应用程序的作者"
+    },
+    "languages": {
+      "type": "array",
+      "description": "应用程序支持的语言列表。",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "$ref": "common/i18nLocale.schema.json"
+          },
+          "name": {
+            "type": "string",
+            "description": "语言名称。"
+          }
+        },
+        "required": ["code", "name"]
+      },
+      "default": [
+        {
+          "code": "default",
+          "name": "默认语言"
+        }
+      ]
+    },
+    "defaultLanguage": {
+      "description": "应用程序的默认语言，若`languages`未指定，则默认为`default`，否则默认为`languages`中的第一个。若指定了`defaultLanguage`，则必须在`languages`中存在。",
+      "$ref": "common/i18nLocale.schema.json"
+    },
+    "generators": {
+      "type": "array",
+      "description": "生成器配置",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "./generators/zod.schema.json"
+          },
+          {
+            "$ref": "./generators/openapi.schema.json"
+          }
+        ]
+      }
+    },
+    "engine": {
+      "type": "string",
+      "description": "应用设计器的最低版本要求，例如`0.1.0`。"
+    }
+  },
+  "required": ["name", "version"],
+  "additionalProperties": true
 }

@@ -1,22 +1,22 @@
 {
-    "$id": "app-designer/types/duration.schema.json",
-    "title": "DurationTypeDefinition",
-    "allOf": [
-        {
-            "$ref": "base.schema.json"
+  "$id": "app-designer/types/duration.schema.json",
+  "title": "DurationTypeDefinition",
+  "allOf": [
+    {
+      "$ref": "base.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "duration",
+          "description": "类型标识符，固定为`duration`。"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "duration",
-                    "description": "类型标识符，固定为`duration`。"
-                },
-                "icon": {
-                    "type": "string",
-                    "default": "mdi:timer-sand"
-                }
-            }
+        "icon": {
+          "type": "string",
+          "default": "mdi:timer-sand"
         }
-    ]
+      }
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "$id": "app-designer/types/guid.schema.json",
-    "title": "GUIDTypeDefinition",
-    "allOf": [
-        {
-            "$ref": "base.schema.json"
+  "$id": "app-designer/types/guid.schema.json",
+  "title": "GUIDTypeDefinition",
+  "allOf": [
+    {
+      "$ref": "base.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "guid",
+          "description": "类型标识符，固定为`guid`。"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "guid",
-                    "description": "类型标识符，固定为`guid`。"
-                },
-                "icon": {
-                    "type": "string",
-                    "default": "mdi:identifier"
-                }
-            }
+        "icon": {
+          "type": "string",
+          "default": "mdi:identifier"
         }
-    ]
+      }
+    }
+  ]
 }

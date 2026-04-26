@@ -1,45 +1,43 @@
 {
-    "$id": "app-designer/types/enum.schema.json",
-    "title": "EnumTypeDefinition",
-    "allOf": [
-        {
-            "$ref": "base.schema.json"
+  "$id": "app-designer/types/enum.schema.json",
+  "title": "EnumTypeDefinition",
+  "allOf": [
+    {
+      "$ref": "base.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "enum",
+          "description": "类型标识符，固定为`enum`。"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "enum",
-                    "description": "类型标识符，固定为`enum`。"
-                },
-                "values": {
-                    "type": "array",
-                    "description": "枚举值。",
-                    "items": {
-                        "oneOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "number"
-                            },
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
-                    }
-                },
-                "icon": {
-                    "type": "string",
-                    "default": "mdi:format-list-bulleted-type"
-                }
-            },
-            "required": [
-                "values"
+        "values": {
+          "type": "array",
+          "description": "枚举值。",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
             ]
+          }
+        },
+        "icon": {
+          "type": "string",
+          "default": "mdi:format-list-bulleted-type"
         }
-    ]
+      },
+      "required": ["values"]
+    }
+  ]
 }

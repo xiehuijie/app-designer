@@ -1,123 +1,123 @@
 {
-    "$id": "app-designer/types/main.schema.json",
-    "title": "TypeDefinitions",
-    "oneOf": [
-        {
-            "$ref": "string.schema.json"
-        },
-        {
-            "$ref": "number.schema.json"
-        },
-        {
-            "$ref": "boolean.schema.json"
-        },
-        {
-            "$ref": "literal.schema.json"
-        },
-        {
-            "$ref": "enum.schema.json"
-        },
-        {
-            "$ref": "null.schema.json"
-        },
-        {
-            "$ref": "any.schema.json"
-        },
-        {
-            "$ref": "array.schema.json"
-        },
-        {
-            "$ref": "object.schema.json"
-        },
-        {
-            "$ref": "tuple.schema.json"
-        },
-        {
-            "$ref": "anyof.schema.json"
-        },
-        {
-            "$ref": "allof.schema.json"
-        },
-        {
-            "$ref": "oneof.schema.json"
-        },
-        {
-            "$ref": "email.schema.json"
-        },
-        {
-            "$ref": "uuid.schema.json"
-        },
-        {
-            "$ref": "cuid.schema.json"
-        },
-        {
-            "$ref": "guid.schema.json"
-        },
-        {
-            "$ref": "ulid.schema.json"
-        },
-        {
-            "$ref": "nanoid.schema.json"
-        },
-        {
-            "$ref": "color.schema.json"
-        },
-        {
-            "$ref": "timezone.schema.json"
-        },
-        {
-            "$ref": "url.schema.json"
-        },
-        {
-            "$ref": "base32.schema.json"
-        },
-        {
-            "$ref": "base36.schema.json"
-        },
-        {
-            "$ref": "base64.schema.json"
-        },
-        {
-            "$ref": "base64url.schema.json"
-        },
-        {
-            "$ref": "hex.schema.json"
-        },
-        {
-            "$ref": "hash.schema.json"
-        },
-        {
-            "$ref": "ipv4.schema.json"
-        },
-        {
-            "$ref": "ipv6.schema.json"
-        },
-        {
-            "$ref": "cidrv4.schema.json"
-        },
-        {
-            "$ref": "cidrv6.schema.json"
-        },
-        {
-            "$ref": "mac.schema.json"
-        },
-        {
-            "$ref": "date.schema.json"
-        },
-        {
-            "$ref": "time.schema.json"
-        },
-        {
-            "$ref": "datetime.schema.json"
-        },
-        {
-            "$ref": "duration.schema.json"
-        },
-        {
-            "$ref": "ref.schema.json"
-        },
-        {
-            "$ref": "codec.schema.json"
-        }
-    ]
+  "$id": "app-designer/types/main.schema.json",
+  "title": "TypeDefinitions",
+  "oneOf": [
+    {
+      "$ref": "string.schema.json"
+    },
+    {
+      "$ref": "number.schema.json"
+    },
+    {
+      "$ref": "boolean.schema.json"
+    },
+    {
+      "$ref": "literal.schema.json"
+    },
+    {
+      "$ref": "enum.schema.json"
+    },
+    {
+      "$ref": "null.schema.json"
+    },
+    {
+      "$ref": "any.schema.json"
+    },
+    {
+      "$ref": "array.schema.json"
+    },
+    {
+      "$ref": "object.schema.json"
+    },
+    {
+      "$ref": "tuple.schema.json"
+    },
+    {
+      "$ref": "anyof.schema.json"
+    },
+    {
+      "$ref": "allof.schema.json"
+    },
+    {
+      "$ref": "oneof.schema.json"
+    },
+    {
+      "$ref": "email.schema.json"
+    },
+    {
+      "$ref": "uuid.schema.json"
+    },
+    {
+      "$ref": "cuid.schema.json"
+    },
+    {
+      "$ref": "guid.schema.json"
+    },
+    {
+      "$ref": "ulid.schema.json"
+    },
+    {
+      "$ref": "nanoid.schema.json"
+    },
+    {
+      "$ref": "color.schema.json"
+    },
+    {
+      "$ref": "timezone.schema.json"
+    },
+    {
+      "$ref": "url.schema.json"
+    },
+    {
+      "$ref": "base32.schema.json"
+    },
+    {
+      "$ref": "base36.schema.json"
+    },
+    {
+      "$ref": "base64.schema.json"
+    },
+    {
+      "$ref": "base64url.schema.json"
+    },
+    {
+      "$ref": "hex.schema.json"
+    },
+    {
+      "$ref": "hash.schema.json"
+    },
+    {
+      "$ref": "ipv4.schema.json"
+    },
+    {
+      "$ref": "ipv6.schema.json"
+    },
+    {
+      "$ref": "cidrv4.schema.json"
+    },
+    {
+      "$ref": "cidrv6.schema.json"
+    },
+    {
+      "$ref": "mac.schema.json"
+    },
+    {
+      "$ref": "date.schema.json"
+    },
+    {
+      "$ref": "time.schema.json"
+    },
+    {
+      "$ref": "datetime.schema.json"
+    },
+    {
+      "$ref": "duration.schema.json"
+    },
+    {
+      "$ref": "ref.schema.json"
+    },
+    {
+      "$ref": "codec.schema.json"
+    }
+  ]
 }

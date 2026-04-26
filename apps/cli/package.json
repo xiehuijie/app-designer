@@ -21,6 +21,7 @@
     "cli": "node ./dist/cli.js"
   },
   "dependencies": {
+    "@app-designer/schemas": "workspace:*",
     "chalk": "catalog:",
     "colorette": "catalog:",
     "commander": "catalog:",

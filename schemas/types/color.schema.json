@@ -1,49 +1,36 @@
 {
-    "$id": "app-designer/types/color.schema.json",
-    "title": "ColorTypeDefinition",
-    "allOf": [
-        {
-            "$ref": "base.schema.json"
+  "$id": "app-designer/types/color.schema.json",
+  "title": "ColorTypeDefinition",
+  "allOf": [
+    {
+      "$ref": "base.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "color",
+          "description": "类型标识符，固定为`color`。"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "color",
-                    "description": "类型标识符，固定为`color`。"
-                },
-                "mode": {
-                    "type": "string",
-                    "description": "颜色匹配模式。",
-                    "enum": [
-                        "whitelist",
-                        "blacklist",
-                        "none"
-                    ]
-                },
-                "format": {
-                    "type": "array",
-                    "description": "允许/禁止的颜色格式。",
-                    "items": {
-                        "type": "string",
-                        "enum": [
-                            "hex",
-                            "hexa",
-                            "rgb",
-                            "rgba",
-                            "hsl",
-                            "hsla"
-                        ]
-                    }
-                },
-                "icon": {
-                    "type": "string",
-                    "default": "mdi:palette"
-                }
-            },
-            "required": [
-                "mode"
-            ]
+        "mode": {
+          "type": "string",
+          "description": "颜色匹配模式。",
+          "enum": ["whitelist", "blacklist", "none"]
+        },
+        "format": {
+          "type": "array",
+          "description": "允许/禁止的颜色格式。",
+          "items": {
+            "type": "string",
+            "enum": ["hex", "hexa", "rgb", "rgba", "hsl", "hsla"]
+          }
+        },
+        "icon": {
+          "type": "string",
+          "default": "mdi:palette"
         }
-    ]
+      },
+      "required": ["mode"]
+    }
+  ]
 }

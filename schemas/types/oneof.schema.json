@@ -1,32 +1,30 @@
 {
-    "$id": "app-designer/types/oneof.schema.json",
-    "title": "OneOfTypeDefinition",
-    "allOf": [
-        {
-            "$ref": "base.schema.json"
+  "$id": "app-designer/types/oneof.schema.json",
+  "title": "OneOfTypeDefinition",
+  "allOf": [
+    {
+      "$ref": "base.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "oneOf",
+          "description": "类型标识符，固定为`oneOf`。"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "oneOf",
-                    "description": "类型标识符，固定为`oneOf`。"
-                },
-                "types": {
-                    "type": "array",
-                    "description": "任意类型。",
-                    "items": {
-                        "$ref": "main.schema.json"
-                    }
-                },
-                "icon": {
-                    "type": "string",
-                    "default": "mdi:set-left-right"
-                }
-            },
-            "required": [
-                "types"
-            ]
+        "types": {
+          "type": "array",
+          "description": "任意类型。",
+          "items": {
+            "$ref": "main.schema.json"
+          }
+        },
+        "icon": {
+          "type": "string",
+          "default": "mdi:set-left-right"
         }
-    ]
+      },
+      "required": ["types"]
+    }
+  ]
 }

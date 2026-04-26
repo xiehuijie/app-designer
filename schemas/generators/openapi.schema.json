@@ -1,21 +1,18 @@
 {
-    "$id": "app-designer/generators/openapi.schema.json",
-    "title": "OpenApiGenerator",
-    "description": "用于描述OpenAPI生成器的配置",
-    "type": "object",
-    "properties": {
-        "type": {
-            "type": "string",
-            "const": "openapi",
-            "description": "生成器的类型，固定为`openapi`。"
-        },
-        "outputPath": {
-            "type": "string",
-            "description": "生成的OpenAPI文件的输出路径。"
-        }
+  "$id": "app-designer/generators/openapi.schema.json",
+  "title": "OpenApiGenerator",
+  "description": "用于描述OpenAPI生成器的配置",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "openapi",
+      "description": "生成器的类型，固定为`openapi`。"
     },
-    "required": [
-        "type",
-        "outputPath"
-    ]
+    "outputPath": {
+      "type": "string",
+      "description": "生成的OpenAPI文件的输出路径。"
+    }
+  },
+  "required": ["type", "outputPath"]
 }

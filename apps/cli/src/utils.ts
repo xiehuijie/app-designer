@@ -1,6 +1,6 @@
-import { bold, green, red, yellow, blue, gray } from 'colorette';
-import type { Ora } from 'ora';
-import ora from 'ora';
+import { bold, green, red, yellow, blue, gray } from "colorette";
+import type { Ora } from "ora";
+import ora from "ora";
 
 export const colors = {
   success: green,

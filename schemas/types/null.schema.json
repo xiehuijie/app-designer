@@ -1,22 +1,22 @@
 {
-    "$id": "app-designer/types/null.schema.json",
-    "title": "NullTypeDefinition",
-    "allOf": [
-        {
-            "$ref": "base.schema.json"
+  "$id": "app-designer/types/null.schema.json",
+  "title": "NullTypeDefinition",
+  "allOf": [
+    {
+      "$ref": "base.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "null",
+          "description": "类型标识符，固定为`null`。"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "null",
-                    "description": "类型标识符，固定为`null`。"
-                },
-                "icon": {
-                    "type": "string",
-                    "default": "mdi:null"
-                }
-            }
+        "icon": {
+          "type": "string",
+          "default": "mdi:null"
         }
-    ]
+      }
+    }
+  ]
 }

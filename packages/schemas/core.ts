@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { TypeDefinitionInput } from "./builtin-types";
 
 export const I18nLocaleSchema = z.string();
 

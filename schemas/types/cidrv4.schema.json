@@ -1,22 +1,22 @@
 {
-    "$id": "app-designer/types/cidrv4.schema.json",
-    "title": "CIDRv4TypeDefinition",
-    "allOf": [
-        {
-            "$ref": "base.schema.json"
+  "$id": "app-designer/types/cidrv4.schema.json",
+  "title": "CIDRv4TypeDefinition",
+  "allOf": [
+    {
+      "$ref": "base.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "cidrv4",
+          "description": "类型标识符，固定为`cidrv4`。"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "cidrv4",
-                    "description": "类型标识符，固定为`cidrv4`。"
-                },
-                "icon": {
-                    "type": "string",
-                    "default": "mdi:ip-network"
-                }
-            }
+        "icon": {
+          "type": "string",
+          "default": "mdi:ip-network"
         }
-    ]
+      }
+    }
+  ]
 }

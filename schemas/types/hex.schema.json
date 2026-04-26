@@ -1,22 +1,22 @@
 {
-    "$id": "app-designer/types/hex.schema.json",
-    "title": "HexTypeDefinition",
-    "allOf": [
-        {
-            "$ref": "binary.schema.json"
+  "$id": "app-designer/types/hex.schema.json",
+  "title": "HexTypeDefinition",
+  "allOf": [
+    {
+      "$ref": "binary.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "hex",
+          "description": "类型标识符，固定为`hex`。"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "hex",
-                    "description": "类型标识符，固定为`hex`。"
-                },
-                "icon": {
-                    "type": "string",
-                    "default": "mdi:code-string"
-                }
-            }
+        "icon": {
+          "type": "string",
+          "default": "mdi:code-string"
         }
-    ]
+      }
+    }
+  ]
 }

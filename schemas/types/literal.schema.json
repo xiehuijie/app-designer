@@ -1,42 +1,40 @@
 {
-    "$id": "app-designer/types/literal.schema.json",
-    "title": "LiteralTypeDefinition",
-    "allOf": [
-        {
-            "$ref": "base.schema.json"
+  "$id": "app-designer/types/literal.schema.json",
+  "title": "LiteralTypeDefinition",
+  "allOf": [
+    {
+      "$ref": "base.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "literal",
+          "description": "类型标识符，固定为`literal`。"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "literal",
-                    "description": "类型标识符，固定为`literal`。"
-                },
-                "value": {
-                    "description": "字面量值。",
-                    "oneOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "number"
-                        },
-                        {
-                            "type": "boolean"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ]
-                },
-                "icon": {
-                    "type": "string",
-                    "default": "carbon:quotes"
-                }
+        "value": {
+          "description": "字面量值。",
+          "oneOf": [
+            {
+              "type": "string"
             },
-            "required": [
-                "value"
-            ]
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "icon": {
+          "type": "string",
+          "default": "carbon:quotes"
         }
-    ]
+      },
+      "required": ["value"]
+    }
+  ]
 }
