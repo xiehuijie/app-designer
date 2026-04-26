@@ -17,8 +17,8 @@
       "path": "packages/components",
     },
     {
-      "name": "Types",
-      "path": "packages/types",
+      "name": "Type Schemas",
+      "path": "packages/schemas",
     },
     {
       "name": "Web UI",
@@ -29,7 +29,7 @@
       "path": "apps/cli",
     },
     {
-      "name": "Schemas",
+      "name": "Json Schemas",
       "path": "schemas",
     },
     {
