@@ -1,133 +1,129 @@
 {
-	"folders": [
-		{
-			"name": "Root",
-			"path": "."
-		},
-		{
-			"name": "Configs",
-			"path": "configs"
-		},
-		{
-			"name": "Core",
-			"path": "packages/core"
-		},
-		{
-			"name": "Components",
-			"path": "packages/components"
-		},
-		{
-			"name": "Types",
-			"path": "packages/types"
-		},
-		{
-			"name": "Web UI",
-			"path": "apps/webui"
-		},
-		{
-			"name": "CLI",
-			"path": "apps/cli"
-		},
-		{
-			"name": "Schemas",
-			"path": "schemas"
-		},
-		{
-			"name": "VS Code Extension",
-			"path": "apps/vscode"
-		},
-		{
-			"name": "Playground",
-			"path": "playground"
-		},
-		{
-			"name": "Zod Generator",
-			"path": "generators/zod"
-		},
-		{
-			"name": "OpenAPI Generator",
-			"path": "generators/openapi"
-		}
-	],
-	"settings": {
-		"cSpell.words": [
-			"appmeta",
-			"cidrv",
-			"esbuild",
-			"hexa",
-			"iconify",
-			"oxfmt",
-			"oxfmtrc",
-			"oxlint",
-			"webui",
-			"zeabur"
-		],
-		"json.schemas": [
-			{
-				"fileMatch": [
-					"appmeta.json"
-				],
-				"url": "./schemas/appmeta.schema.json"
-			},
-			{
-				"fileMatch": [
-					"*.type.json",
-					"*.field.json",
-					"*.struct.json",
-					"*.model.json",
-					"*.view.json",
-				],
-				"url": "./schemas/types/main.schema.json"
-			},
-			{
-				"fileMatch": [
-					"*.codec.json",
-				],
-				"url": "./schemas/types/codec.schema.json"
-			}
-		],
-		"material-icon-theme.folders.associations": {
-			"apps/webui": "public",
-			"generators/openapi": "meta",
-			"generators/zod": "zeabur"
-		},
-		"yaml.schemas": {
-			"./schemas/appmeta.schema.json": [
-				"appmeta.yaml"
-			],
-			"./schemas/types/codec.schema.json": [
-				"*.codec.yaml",
-			],
-			"./schemas/types/main.schema.json": [
-				"*.type.yaml",
-				"*.field.yaml",
-				"*.struct.yaml",
-				"*.model.yaml",
-				"*.view.yaml",
-			]
-		},
-		"oxc.fmt.configPath": "configs/oxfmt/.oxfmtrc.json",
-		"oxc.enable.oxfmt": true,
-		"editor.codeActionsOnSave": {
-			"source.fixAll.oxc": "always"
-		},
-		"[javascript]": {
-			"editor.defaultFormatter": "oxc.oxc-vscode",
-			"editor.formatOnSave": true
-		},
-		"[typescript]": {
-			"editor.defaultFormatter": "oxc.oxc-vscode",
-			"editor.formatOnSave": true
-		},
-		"editor.indentSize": "tabSize",
-		"editor.tabSize": 2,
-		"editor.insertSpaces": false
-	},
-	"extensions": {
-		"recommendations": [
-			"PKief.material-icon-theme",
-			"streetsidesoftware.code-spell-checker",
-			"oxc.oxc-vscode"
-		]
-	}
+  "folders": [
+    {
+      "name": "Root",
+      "path": ".",
+    },
+    {
+      "name": "Configs",
+      "path": "configs",
+    },
+    {
+      "name": "Core",
+      "path": "packages/core",
+    },
+    {
+      "name": "Components",
+      "path": "packages/components",
+    },
+    {
+      "name": "Types",
+      "path": "packages/types",
+    },
+    {
+      "name": "Web UI",
+      "path": "apps/webui",
+    },
+    {
+      "name": "CLI",
+      "path": "apps/cli",
+    },
+    {
+      "name": "Schemas",
+      "path": "schemas",
+    },
+    {
+      "name": "VS Code Extension",
+      "path": "apps/vscode",
+    },
+    {
+      "name": "Playground",
+      "path": "playground",
+    },
+    {
+      "name": "Zod Generator",
+      "path": "generators/zod",
+    },
+    {
+      "name": "OpenAPI Generator",
+      "path": "generators/openapi",
+    },
+  ],
+  "settings": {
+    "npm.scriptRunner": "vp",
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "cSpell.words": [
+      "appmeta",
+      "cidrv",
+      "esbuild",
+      "hexa",
+      "iconify",
+      "oxfmt",
+      "oxfmtrc",
+      "oxlint",
+      "webui",
+      "zeabur",
+    ],
+    "json.schemas": [
+      {
+        "fileMatch": ["appmeta.json"],
+        "url": "./schemas/appmeta.schema.json",
+      },
+      {
+        "fileMatch": [
+          "*.type.json",
+          "*.field.json",
+          "*.struct.json",
+          "*.model.json",
+          "*.view.json",
+        ],
+        "url": "./schemas/types/main.schema.json",
+      },
+      {
+        "fileMatch": ["*.codec.json"],
+        "url": "./schemas/types/codec.schema.json",
+      },
+    ],
+    "material-icon-theme.folders.associations": {
+      "apps/webui": "public",
+      "generators/openapi": "meta",
+      "generators/zod": "zeabur",
+    },
+    "yaml.schemas": {
+      "./schemas/appmeta.schema.json": ["appmeta.yaml"],
+      "./schemas/types/codec.schema.json": ["*.codec.yaml"],
+      "./schemas/types/main.schema.json": [
+        "*.type.yaml",
+        "*.field.yaml",
+        "*.struct.yaml",
+        "*.model.yaml",
+        "*.view.yaml",
+      ],
+    },
+    "oxc.fmt.configPath": "configs/oxfmt/.oxfmtrc.json",
+    "oxc.enable.oxfmt": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.oxc": "always",
+    },
+    "[javascript]": {
+      "editor.defaultFormatter": "oxc.oxc-vscode",
+      "editor.formatOnSave": true,
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": "oxc.oxc-vscode",
+      "editor.formatOnSave": true,
+    },
+    "editor.indentSize": "tabSize",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": false,
+  },
+  "extensions": {
+    "recommendations": [
+      "PKief.material-icon-theme",
+      "streetsidesoftware.code-spell-checker",
+      "oxc.oxc-vscode",
+    ],
+  },
 }
