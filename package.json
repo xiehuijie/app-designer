@@ -11,10 +11,13 @@
     "changeset:publish": "changeset publish",
     "prepare": "vp config"
   },
+  "dependencies": {
+    "@playwright/test": "^1.59.1"
+  },
   "devDependencies": {
     "@changesets/cli": "catalog:",
     "turbo": "catalog:",
-    "typescript": "catalog:",
+    "typescript": "^6.0.3",
     "vite-plus": "catalog:"
   },
   "engines": {
