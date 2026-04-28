@@ -65,6 +65,14 @@
       "oxlint",
       "webui",
       "zeabur",
+      "vite",
+      "vitest",
+      "colorette",
+      "pinia",
+      "jsdom",
+      "vitejs",
+      "voidzero",
+      "keytar",
     ],
     "json.schemas": [
       {
